@@ -4,9 +4,116 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css">
     <title>CPTG Online</title>
 </head>
-<body>
-    
+<body class="color-transition scrollbar">
+    <div class="main-container">
+        <div class="main-header">
+             <a href="https://github.com/foealke/CPTG">Online CPTG Compiler </a>
+        </div>
+        <div class="settings-checkbox-box">
+            <label class="autocompile-label" for="autocompile-checkbox"> 
+                <input class="autocompile-checkbox" id="autocompile-checkbox" type="checkbox" > auto-compile 
+            </label>
+            <label class="darkmode-label" for="darkmode-checkbox"> 
+                <input class="darkmode-checkbox" id="darkmode-checkbox" type="checkbox" > dark mode 
+            </label>
+        </div>
+        <div class="code-section scrollbar">
+            <div class="scrollbar editor color-transition"></div>
+            <div class="scrollbar output color-transition"></div>
+        </div>
+        <div class="compile-btn"> Compile </div>
+    </div>
 </body>
+
+<script src="cptg.compiler.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+<script type="module">
+    import {CodeJar} from 'https://medv.io/codejar/codejar.js'
+    const highlight = ( editor ) => {
+        editor.innerHTML = hljs.highlightAuto( editor.textContent, ["xml"] ).value
+    }
+
+    let jar = CodeJar(document.querySelector('.editor'), highlight)
+    jar.updateCode(`<test>\n\t<!-- your code goes here -->\n</test>`)
+
+    document.querySelector(".darkmode-checkbox").addEventListener("click", () => {
+        let value = !(localStorage.getItem("darkmode") == "true")
+        localStorage.setItem("darkmode", value)
+        changeTheme(value)
+    })
+
+    document.querySelector(".autocompile-checkbox").addEventListener("click", () => {
+        let value = !(localStorage.getItem("autocompile") == "true")
+        localStorage.setItem("autocompile", value)
+    })
+
+    document.querySelector(".autocompile-checkbox").checked = (localStorage.getItem("autocompile") == "true")
+
+    const changeTheme = ( value ) => {
+        document.querySelector(".darkmode-checkbox").checked = value
+        document.querySelector(".editor").style.backgroundColor = 
+            value ? `rgb(22, 22, 22)` : `rgb(255, 255, 255)`;
+
+        document.querySelector(".editor").style.color = 
+            value ? `rgb(255, 255, 255)` : `rgb(0,0,0)`;
+
+        document.querySelector(".output").style.backgroundColor = 
+            value ? `rgb(22, 22, 22)` : `rgb(255, 255, 255)`;
+
+        document.querySelector(".output").style.color = 
+            value ? `rgb(255, 255, 255)` : `rgb(0,0,0)`;
+        
+        document.body.style.backgroundColor = 
+            value ? `rgb(34, 34, 34)` : `rgb(255, 255, 255)`; 
+
+        document.querySelector("a").style.color = 
+            value ?  `rgb(255, 255, 255)` : `rgb(0,0,0)`; 
+
+        document.querySelector(".settings-checkbox-box").style.color = 
+            value ?  `rgb(255, 255, 255)` : `rgb(0,0,0)`; 
+
+        document.querySelector(".scrollbar")
+    }
+
+
+    changeTheme( localStorage.getItem("darkmode") == "true" )
+
+    
+    jar.onUpdate(code => {
+        if ( localStorage.getItem("autocompile") == "true" ) {
+            try {
+                const compiledCode = cptg.runCompilation( code )
+                document.querySelector(".output").innerHTML = compiledCode;
+            } catch(err) {
+                // ignore
+            }
+            
+        }
+    })
+
+    document.body.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && (e.which === 83)) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    document.querySelector(".compile-btn").addEventListener("click", () => {
+        // compile 
+        try {
+            const compiledCode = cptg.runCompilation( jar.toString() )
+            document.querySelector(".output").innerHTML = compiledCode;
+        } catch(err) {
+            // ignore
+            document.querySelector(".output").innerHTML = "Compilation error, \ncheck your code!";
+        }
+    })
+</script>
 </html>
