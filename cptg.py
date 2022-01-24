@@ -41,7 +41,7 @@ def handle_var_char(element: ET.Element) -> str:
 
 def handle_var_string(element: ET.Element) -> str:
     '''Handles the string type of var tag. Generates a random string.'''
-    length = (int(x:=element.attrib.get('length')), 3)[x is None]     # Checks if attribute length is given, if not defaults to 3
+    length = int((x:=element.attrib.get('length'), 3)[x is None])     # Checks if attribute length is given, if not defaults to 3
     contents = (x:=element.attrib.get('range'), 'abc')[x is None]   # Checks range, deafults to 'abc', named 'contents' to avoide confusion with function range()
 
     return "".join(random.choices(var_char_translation_dict[contents], k=length))+" "
@@ -55,7 +55,7 @@ def handle_var_number(element: ET.Element) -> str:
 
 def handle_var_float(element: ET.Element) -> str:
     '''Handles the float type of var tags. Generates a random number with a given number of places after the decimal point.'''
-    length = (int(x:=element.attrib.get('length')), 1)[x is None]     # Checks if attribute length is given, if not defaults to 1
+    length = int((x:=element.attrib.get('length'), 3)[x is None])     # Checks if attribute length is given, if not defaults to 3
     value_range = (x:=element.attrib.get('range'), '0:9')[x is None]    # Checks range, deafults to 0:9
 
     n1, n2 = value_range.split(":")     # Converts string range to a pair of numbers

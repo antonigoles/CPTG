@@ -100,11 +100,7 @@ available parameters
                     - `! @ # $ % ^ & * ( ) - _ + = { } [ ] : ; " ' < > , . ? / | \ ~`
             - **`all`** generates random lowercase Latin alphabet letter, uppercase Latin alphabet letter or random special character
 - `length`
-    - default: 
-        - for **`Float`**:
-            - **`1`** 
-        - for **`String`**:
-            - **`3`**
+    - default: **`3`**
     - only avaliable fo **`String`** and **`Float`**
         - for **`String`** it specifies the number of characters
         - for **`Float`** it specifies the number of places after the decimal point
