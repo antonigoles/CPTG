@@ -3,6 +3,10 @@ import random
 import string
 
 
+def get_deafult_value(value, deafult_value):
+    """Returns value if value is not NoneType. If value is None returns deafult_value."""
+    return value if value is not None else deafult_value
+
 def handle_const(element: ET.Element) -> str:
     '''Handles the const tag. Returns the value of the const and a regular space.'''
     return element.attrib['value']+" "
@@ -17,7 +21,7 @@ def handle_seq(element: ET.Element) -> str:
     return_str = ""
 
 
-    repeatitons = (int(x:=element.attrib.get('times')), 1)[x is None]    # Checks if attribute 'times' is given, if not deafults to 1
+    repeatitons = int(get_deafult_value(element.attrib.get('times'), 1))
     
     for i in range(repeatitons):
         for i in element:
@@ -35,28 +39,28 @@ var_char_translation_dict = {
 
 def handle_var_char(element: ET.Element) -> str:
     '''Handles the char type of var tag. Generates a random char.'''
-    contents = (x:=element.attrib.get('range'), 'abc')[x is None]   # Checks range, deafults to 'abc', named 'contents' to avoide confusion with function range()
+    contents = get_deafult_value(element.attrib.get('range'), 'abc')
 
     return "".join(random.choice(var_char_translation_dict[contents]))+" "
 
 def handle_var_string(element: ET.Element) -> str:
     '''Handles the string type of var tag. Generates a random string.'''
-    length = int((x:=element.attrib.get('length'), 3)[x is None])     # Checks if attribute length is given, if not defaults to 3
-    contents = (x:=element.attrib.get('range'), 'abc')[x is None]   # Checks range, deafults to 'abc', named 'contents' to avoide confusion with function range()
+    length = int(get_deafult_value(element.attrib.get('length'), 3))
+    contents = get_deafult_value(element.attrib.get('range'), 'abc')
 
     return "".join(random.choices(var_char_translation_dict[contents], k=length))+" "
 
 def handle_var_number(element: ET.Element) -> str:
     '''Handles the number type of var tags. Generates a random int.'''
-    value_range = (x:=element.attrib.get('range'), '0:9')[x is None]    # Checks if attribute range is given, deafults to '0:9'
+    value_range = get_deafult_value(element.attrib.get('range'), '0:9')
 
     n1, n2 = value_range.split(":")      # Converts string range to a pair of numbers
     return str(random.randint(int(n1), int(n2)))+" "
 
 def handle_var_float(element: ET.Element) -> str:
     '''Handles the float type of var tags. Generates a random number with a given number of places after the decimal point.'''
-    length = int((x:=element.attrib.get('length'), 3)[x is None])     # Checks if attribute length is given, if not defaults to 3
-    value_range = (x:=element.attrib.get('range'), '0:9')[x is None]    # Checks range, deafults to 0:9
+    length = int(get_deafult_value(element.attrib.get('length'), 3))
+    value_range = get_deafult_value(element.attrib.get('range'), '0:9')
 
     n1, n2 = value_range.split(":")     # Converts string range to a pair of numbers
     return str(random.randint(int(n1)* 10**length, int(n2)* 10**length) / 10**length)+" "  # Multiplication and division is used instead of round() to ensure better distribution
@@ -71,7 +75,7 @@ var_function_dict = {
 
 def handle_var(element: ET.Element) -> str:
     '''Handles the var tag by calling a seperate function for each of the types'''
-    type = (x:=element.attrib.get('type'), 'Number')[x is None]     # Checks if attribute type is given, if not defaults to Number
+    type = get_deafult_value(element.attrib.get('type'), 'Number')
     return var_function_dict[type](element)
 
 
