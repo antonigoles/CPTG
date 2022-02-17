@@ -1,0 +1,7 @@
+# Do not include generated files
+CMakeFiles/*
+CMakeCache.txt
+Makefile
+
+# Do not include binaries folder
+bin/*
