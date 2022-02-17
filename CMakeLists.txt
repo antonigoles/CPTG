@@ -1,0 +1,17 @@
+set(CMAKE_REQUIRED_VERSION 3.14)
+cmake_minimum_required(VERSION ${CMAKE_REQUIRED_VERSION})
+
+project(Local-CPTG LANGUAGES CXX VERSION 0.1.0)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# boost
+find_package(Boost 1.67.0 REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
+add_subdirectory(src)
