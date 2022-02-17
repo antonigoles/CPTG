@@ -1,7 +1,9 @@
 # Do not include generated files
+*/CMakeFiles/*
 CMakeFiles/*
 CMakeCache.txt
 Makefile
+cmake_install.cmake
 
 # Do not include binaries folder
 bin/*
