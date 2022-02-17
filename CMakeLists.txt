@@ -12,6 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Boost 1.67.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
 
 add_subdirectory(src)

@@ -5,3 +5,4 @@ set(PROJECT_SOURCES
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES})
+

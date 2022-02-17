@@ -1,9 +1,5 @@
 # Do not include generated files
-*/CMakeFiles/*
-CMakeFiles/*
-CMakeCache.txt
-Makefile
-cmake_install.cmake
+build/*
 
 # Do not include binaries folder
 bin/*
