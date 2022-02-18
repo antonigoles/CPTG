@@ -8,6 +8,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+
 # boost
 find_package(Boost 1.67.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
