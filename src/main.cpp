@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "nodes/Root.hpp"
+#include "nodes/Seq.hpp"
 
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -8,7 +8,7 @@
 
 int main()
 {
-    Root root;
+    Seq root;
     boost::property_tree::ptree tree;
     boost::property_tree::read_xml("example1.xml", tree);
 
@@ -19,9 +19,13 @@ int main()
     {   
         if(child.first == "test")
         {
-            root.setRootTag(
-                std::make_shared< boost::property_tree::ptree >(child.second)
+            root = Seq(
+                std::make_shared< boost::property_tree::ptree >(child.second),
+                1
                 );
         }
     }
+
+    root.FindSubNodes();
+    root.Print();
 }
