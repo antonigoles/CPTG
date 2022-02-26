@@ -7,6 +7,6 @@ class Node
 {
 public:
     virtual ~Node() = default;
-    virtual void FindSubNodes() = 0;
     virtual void Print() = 0;
+
 };
