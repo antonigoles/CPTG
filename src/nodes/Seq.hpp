@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include "Node.hpp"
+#include "Const.hpp"
+#include "Br.hpp"
 
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
