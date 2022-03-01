@@ -1,5 +1,5 @@
 # CPTG Docs
-Simple XML based language created for Competetive Programmers to quickly generate random tests for competitions
+Simple XML-based language created for Competetive Programmers to quickly generate random tests for competitions
 <br>
 
 
@@ -19,7 +19,7 @@ Simple XML based language created for Competetive Programmers to quickly generat
 
 # Document Structure
 
-Every `.cptg` file should **start** with `<test>` tag and **end** on `</test>` tag
+Every `.cptg` file should **start** with `<test>` tag and **end** with `</test>` tag
 
 <br>
 
@@ -34,13 +34,13 @@ Every `.cptg` file should **start** with `<test>` tag and **end** on `</test>` t
 # Variables and constants
 
 `<var/>` <br>
-- Variable is used to display various types of data randomly generated.
-By default, a variable is a `Number` in range of `0-9`, but it can be modified with [parameters](#tags-and-parameters-documentation).
+- Variable is used to display various types of randomly generated data.
+By default, a variable is a `Number` in the range of `0-9`, but it can be modified with [parameters](#tags-and-parameters-documentation).
 
 <br>
 
 `<const/>` <br>
-- Constant is similiar to variable, but the only parameter it
+- Constant is similar to variable, but the only parameter it
 supports is `value` which is used to specify their... **value** and unlike variable, constant is **static**
 
 
@@ -49,16 +49,16 @@ supports is `value` which is used to specify their... **value** and unlike varia
 # Sequences
 `<seq/>`<br>
 - Sequence is used to repeat a group of tags without copying and pasting (you can think of it as a loop)
-- you can specify diffrent [parameters](#tags-and-parameters-documentation) to make it work diffrently
-- sequences can be nested e.g
+- you can specify different [parameters](#tags-and-parameters-documentation) to make it work differently
+- sequences can be nested e.g.
 ```xml
 <test>
-    <seq times=3>
-        <seq times=2>
+    <seq times="3">
+        <seq times="2">
             <const value="1"/>
         </seq>
     </seq>
-</tests>
+</test>
 <!-- Output: 1 1 1 1 1 1 -->
 ```
 
@@ -74,8 +74,7 @@ supports is `value` which is used to specify their... **value** and unlike varia
 available parameters
 - `type` 
     - default: **`Number`**
-    - used to specify type of data
-    that will be generated 
+    - used to specify the type of data that will be generated 
     - available values: 
         - **`Char`**
         - **`Number`**
@@ -83,7 +82,7 @@ available parameters
         - **`String`**
 - `range` 
     - default: 
-        - for **`Number`** and **`Float`**:, 
+        - for **`Number`** and **`Float`**:
             - **`0:9`** 
         - for **`String`** and **`Char`**:
             - **`abc`** 
@@ -92,17 +91,19 @@ available parameters
         - for **`Number`** and **`Float`**:
             - **`n1:n2`** (random numbers from n1 to n2)
                 - e.g: `<var type="Number" range="-900:900" />` 
-                random number in the range of `<-900;900>`
+                random number in the range of `[-900;900]`
         - for **`String`** and **`Char`**:
-            - **`abc`** generates random lower case latin alphabet letter
-            - **`ABC`** generates random upper case latin alphabet letter
+            - **`abc`** generates random lowercase Latin alphabet letter
+            - **`ABC`** generates random uppercase Latin alphabet letter
             - **`special`** generates random "special character"
                 - list of special characters: 
                     - `! @ # $ % ^ & * ( ) - _ + = { } [ ] : ; " ' < > , . ? / | \ ~`
-            - **`all`** generates random lower case latin alphabet letter or upper case latin alphabet letter or random special character
+            - **`all`** generates random lowercase Latin alphabet letter, uppercase Latin alphabet letter or random special character
 - `length`
     - default: **`3`**
-    - **`String`** only parameter
+    - only avaliable fo **`String`** and **`Float`**
+        - for **`String`** it specifies the number of characters
+        - for **`Float`** it specifies the number of places after the decimal point
 
 
 <br>
@@ -128,7 +129,7 @@ available parameters
 <br>
 
 ## `<br>`
-- adds a break point (`\n`)
+- adds a breakpoint (`\n`)
 - nothing else
 
 <br> 
@@ -141,7 +142,7 @@ available parameters
 *Code*
 ```XML
 <test>
-    <!-- just putting n here without any parameters will
+    <!-- just putting <var/> here without any parameters will
     generate a random number from 0 to 9 -->
     <var/> 
 </test>
@@ -157,7 +158,7 @@ ___
 ```XML
 <test>
     <!-- sequence example  -->
-    <seq times=5>
+    <seq times="5">
         <var/>
     </seq>
 </test>
@@ -171,17 +172,16 @@ ___
 *Code*
 ```XML
 <test>
-    <seq times=6>
-        <seq times=5> 
+    <seq times="6">
+        <seq times="5"> 
             <var/>
         </seq>
-        <br>
+        <br/>
     </seq>
 </test>
 ```
 *Example Output*
 ```
-1
 2 3 1 5 6
 7 9 1 2 3
 0 9 8 2 9
@@ -195,14 +195,14 @@ ___
 *Code*
 ```XML
 <test>
-    <!-- variables can be diffrent types -->
-    <seq times=3>
-        <var type="char" table="abc" />
+    <!-- variables can be of different types -->
+    <seq times="3">
+        <var type="char" range="abc" />
         <var type="char" range="ABC" />
         <var type="char" range="special" />
         <var type="char" range="all" />
-        <var type="string" range="all" length=5 />
-        <br>
+        <var type="string" range="all" length="5" />
+        <br/>
     </seq>
 </test>
 ```
