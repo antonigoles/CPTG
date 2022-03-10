@@ -4,7 +4,8 @@ Var::Var() : varType(Type::Number) { }
 
 Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) : 
     varTag(tag),
-    varType(Type::Number)
+    varType(Type::Number),
+    range( {48, 57} )
 {
     // Pointer created to attributes node only if they exist
     boost::optional< boost::property_tree::ptree& > child =
@@ -17,6 +18,11 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
             // TODO: what if the entered type does not exist?
             varType = typeMap[varTag->get<std::string>("<xmlattr>.type")];
         }
+    }
+    else
+    // No Parameters are specified (all default)
+    {
+        return;
     }
 
     // Find the range for var variable
@@ -34,6 +40,16 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     {
         FindLength();
     }
+}
+
+void Var::FindNumericRange()
+{
+
+}
+
+void Var::FindLexicalRange()
+{
+
 }
 
 void Var::Print()
