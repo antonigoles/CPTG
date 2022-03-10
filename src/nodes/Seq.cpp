@@ -10,8 +10,20 @@ Seq::Seq() : times(1) { }
 
 Seq::Seq(std::shared_ptr< boost::property_tree::ptree > sT) : 
     seqTag(sT),
-    times(seqTag->get<int>("<xmlattr>.times"))
+    times(1)
 {
+    // Pointer created to attributes node only if they exist
+    boost::optional< boost::property_tree::ptree& > child =
+        seqTag->get_child_optional("<xmlattr>");
+
+    if(child)
+    {
+        if(child.value().count("times"))
+        {
+            times = seqTag->get<int>("<xmlattr>.times");
+        }
+    }
+
     FindSubNodes();
 }
 
