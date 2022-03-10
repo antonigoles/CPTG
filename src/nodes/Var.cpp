@@ -28,11 +28,11 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     // Find the range for var variable
     if(varType == Type::Number || varType == Type::Float)
     {
-        FindNumericRange();
+        FindNumericRange(child);
     }
     else
     {
-        FindLexicalRange();
+        FindLexicalRange(child);
     }
     
     // Find lengh only if needed
@@ -42,17 +42,28 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     }
 }
 
-void Var::FindNumericRange()
+void Var::FindNumericRange(boost::optional< boost::property_tree::ptree& >& child)
 {
-
+    // if no range parameter is specified, return
+    if(!child.value().count("range"))
+    {
+        return;
+    }
+    
 }
 
-void Var::FindLexicalRange()
+void Var::FindLexicalRange(boost::optional< boost::property_tree::ptree& >& child)
 {
+    // if no range parameter is specified, set default lexical range and return
+    if(!child.value().count("range"))
+    {
+        range = {97, 122};
+        return;
+    }
 
 }
 
 void Var::Print()
 {
-    std::cout << ' ';
+
 }
