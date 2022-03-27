@@ -108,7 +108,7 @@ void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >
             // TODO: range does not cover all characters
             range = {':', '@'};
         }
-        else if(rangeKey == "ALL")
+        else if(rangeKey == "all")
         {
             range = {'!', '~'};
         }
