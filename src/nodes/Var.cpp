@@ -46,10 +46,13 @@ bool Var::FindType( boost::optional< boost::property_tree::ptree& >& attributes 
 {
     if(attributes.value().count("type"))
     {
-        // TODO: Check if type is valid
+        // If type is not in typemap, return false
+        if(typeMap.find(attributes.value().get<std::string>("type")) == typeMap.end())
+        {
+            return false;
+        }
 
         varType = typeMap[varTag->get<std::string>("<xmlattr>.type")];
-        return true;
     }
 
     return true;
