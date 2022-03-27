@@ -40,7 +40,7 @@ class Var : public Node
 
     char GenerateRandomChar();
     int GenerateRandomNumber();
-    std::string ReverseNumber( const int& number );
+    std::string GetReverseNumber( int generatedNumber );
 
 public:
     Var();

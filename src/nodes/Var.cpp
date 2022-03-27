@@ -151,11 +151,12 @@ void Var::Print()
 {
     if(varType == Type::Number || varType == Type::Float)
     {
-        std::cout << GenerateRandomNumber();
+        int randomNumber = GenerateRandomNumber();
+        std::cout << randomNumber;
 
         if(varType == Type::Float)
         {
-            std::cout << "." << ReverseNumber(GenerateRandomNumber());
+            std::cout << GetReverseNumber(randomNumber);
         }
     }
     else if(varType == Type::String || varType == Type::Char)
@@ -179,10 +180,30 @@ int Var::GenerateRandomNumber()
     return rand() % (range.second - range.first + 1) + range.first;
 }
 
-std::string Var::ReverseNumber(const int& number)
+std::string Var::GetReverseNumber(int generatedNumber)
 {
-    std::stringstream ss;
-    ss << number;
+    // To avoid exceeding provided range
+    if(generatedNumber == range.second)
+    {
+        return "";
+    }
+
+    std::stringstream ss, tempStream;
+    
+    for(int i = 0; i < length; i++)
+    {
+        tempStream << char('0' + rand() % 10);
+        if(tempStream.str().back() != '0')
+        {
+            ss << tempStream.str();
+            tempStream.str("");
+        }
+    }
+
+    if(!ss.str().empty())
+    {
+        ss << '.';
+    }
 
     std::string str = ss.str();
     std::reverse(str.begin(), str.end());
