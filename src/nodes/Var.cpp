@@ -5,7 +5,7 @@ Var::Var() : varType(Type::Number) { }
 Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) : 
     varTag(tag),
     varType(Type::Number),
-    range( {48, 57} )
+    range( {'0', '9'} )
 {
     boost::optional< boost::property_tree::ptree& > attributes =
         varTag->get_child_optional("<xmlattr>");
@@ -16,7 +16,7 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     }
 }
 
-void Var::FindParameters(boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindParameters(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
     if(!FindType(attributes))
     {
@@ -37,12 +37,12 @@ void Var::FindParameters(boost::optional< boost::property_tree::ptree& >& attrib
     // Find lengh only if needed
     if(varType == Type::String || varType == Type::Float)
     {
-        FindLength();
+        FindLength(attributes);
     }
 }
 
 // Returns true if type is valid, type can be empty
-bool Var::FindType( boost::optional< boost::property_tree::ptree& >& attributes )
+bool Var::FindType(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
     if(attributes.value().count("type"))
     {
@@ -58,7 +58,7 @@ bool Var::FindType( boost::optional< boost::property_tree::ptree& >& attributes 
     return true;
 }
 
-void Var::FindNumericRange(boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindNumericRange(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
     // if no range parameter is specified, return
     if(!attributes.value().count("range"))
@@ -68,18 +68,44 @@ void Var::FindNumericRange(boost::optional< boost::property_tree::ptree& >& attr
     
 }
 
-void Var::FindLexicalRange(boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
     // if no range parameter is specified, set default lexical range and return
-    if(!attributes.value().count("range"))
+    if(attributes.value().count("range"))
     {
-        range = {97, 122};
-        return;
-    }
+        std::string rangeKey = varTag->get<std::string>("<xmlattr>.range");
 
+        if(rangeKey == "abc")
+        {
+            range = {'a', 'z'};
+        }
+        if(rangeKey == "ABC")
+        {
+            range = {'A', 'Z'};
+        }
+        else if(rangeKey == "special")
+        {
+            // TODO: range does not cover all characters
+            range = {':', '@'};
+        }
+        else if(rangeKey == "ALL")
+        {
+            range = {'!', '~'};
+        }
+        else
+        {
+            std::cout << "Error: Unknown range\nUsed default instead" << std::endl;
+            range = {'a', 'z'};
+        }
+    }
+    else
+    {
+        // Set default range for lexical variables
+        range = {'a', 'z'};
+    }
 }
 
-void Var::FindLength()
+void Var::FindLength(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
 
 }

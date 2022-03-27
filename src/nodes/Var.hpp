@@ -26,12 +26,12 @@ class Var : public Node
 
     std::pair< int, int > range;
 
-    void FindParameters( boost::optional< boost::property_tree::ptree& >& attributes );
+    void FindParameters( const boost::optional< boost::property_tree::ptree& >& attributes );
 
-    bool FindType( boost::optional< boost::property_tree::ptree& >& attributes );
-    void FindNumericRange( boost::optional< boost::property_tree::ptree& >& attributes );
-    void FindLexicalRange( boost::optional< boost::property_tree::ptree& >& attributes );
-    void FindLength();
+    bool FindType( const boost::optional< boost::property_tree::ptree& >& attributes );
+    void FindNumericRange( const boost::optional< boost::property_tree::ptree& >& attributes );
+    void FindLexicalRange( const boost::optional< boost::property_tree::ptree& >& attributes );
+    void FindLength( const boost::optional< boost::property_tree::ptree& >& attributes );
 
 public:
     Var();
