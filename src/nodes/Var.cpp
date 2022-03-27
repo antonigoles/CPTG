@@ -7,6 +7,7 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     varType(Type::Number),
     range( {'0', '9'} )
 {
+    srand(time(NULL));
     boost::optional< boost::property_tree::ptree& > attributes =
         varTag->get_child_optional("<xmlattr>");
 
