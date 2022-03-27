@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <unordered_map>
+#include <stdlib.h>
 
 #include "Node.hpp"
 
@@ -35,6 +36,10 @@ class Var : public Node
     void FindNumericRange( const boost::optional< boost::property_tree::ptree& >& attributes );
     void FindLexicalRange( const boost::optional< boost::property_tree::ptree& >& attributes );
     void FindLength( const boost::optional< boost::property_tree::ptree& >& attributes );
+
+    char GenerateRandomChar();
+    int GenerateRandomNumber();
+    std::string ReverseNumber( const int& number );
 
 public:
     Var();

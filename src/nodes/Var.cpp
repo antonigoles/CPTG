@@ -39,6 +39,10 @@ void Var::FindParameters(const boost::optional< boost::property_tree::ptree& >& 
     {
         FindLength(attributes);
     }
+    else if(varType == Type::Char)
+    {
+        length = 1;
+    }
 }
 
 // Returns true if type is valid, type can be empty
@@ -144,5 +148,42 @@ void Var::FindLength(const boost::optional< boost::property_tree::ptree& >& attr
 
 void Var::Print()
 {
+    if(varType == Type::Number || varType == Type::Float)
+    {
+        std::cout << GenerateRandomNumber();
 
+        if(varType == Type::Float)
+        {
+            std::cout << "." << ReverseNumber(GenerateRandomNumber());
+        }
+    }
+    else if(varType == Type::String || varType == Type::Char)
+    {
+        for(int i = 0; i < length; i++)
+        {
+            std::cout << GenerateRandomChar();
+        }
+    }
+    
+    std::cout << " ";
+}
+
+char Var::GenerateRandomChar()
+{
+    return char(range.first + rand() % (range.second - range.first + 1));
+}
+
+int Var::GenerateRandomNumber()
+{
+    return rand() % (range.second - range.first + 1) + range.first;
+}
+
+std::string Var::ReverseNumber(const int& number)
+{
+    std::stringstream ss;
+    ss << number;
+
+    std::string str = ss.str();
+    std::reverse(str.begin(), str.end());
+    return str;
 }
