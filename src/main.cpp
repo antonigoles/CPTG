@@ -22,7 +22,7 @@ int main()
             root = Seq(
                 std::make_shared< boost::property_tree::ptree >(child.second),
                 1
-                );
+            );
         }
     }
 
