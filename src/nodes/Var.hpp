@@ -9,6 +9,7 @@
 #include <boost/optional/optional.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/algorithm/string.hpp>
 
 class Var : public Node
 {

@@ -61,11 +61,26 @@ bool Var::FindType(const boost::optional< boost::property_tree::ptree& >& attrib
 void Var::FindNumericRange(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
     // if no range parameter is specified, return
-    if(!attributes.value().count("range"))
+    if(attributes.value().count("range"))
     {
-        return;
+        std::string rangeStr = attributes.value().get<std::string>("range");
+        std::vector< std::string > splitRange;
+
+        boost::split(splitRange, rangeStr, boost::is_any_of(":"));
+
+        if(std::stoi(splitRange[0]) > std::stoi(splitRange[1]))
+        {
+            std::cout << "Error: Range is not valid\nUsing default instead" << std::endl;
+            range = {0, 9};
+            return;
+        }
+
+        range = {std::stoi(splitRange[0]), std::stoi(splitRange[1])};
     }
-    
+    else
+    {
+        range = {0, 9};
+    }
 }
 
 void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >& attributes)
