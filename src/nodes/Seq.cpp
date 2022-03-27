@@ -45,6 +45,11 @@ void Seq::FindSubNodes()
             subnodes.push_back( SharedNode(Const, child.second) );
         }
 
+        if(child.first == "var")
+        {
+            subnodes.push_back( SharedNode(Var, child.second) );
+        }
+
         if(child.first == "br")
         {
             subnodes.push_back( std::make_shared<Br>() );

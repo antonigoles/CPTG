@@ -7,6 +7,7 @@
 #include "Node.hpp"
 #include "Const.hpp"
 #include "Br.hpp"
+#include "Var.hpp"
 
 #include <boost/optional/optional.hpp>
 #include <boost/property_tree/xml_parser.hpp>
