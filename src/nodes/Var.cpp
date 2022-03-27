@@ -7,32 +7,31 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     varType(Type::Number),
     range( {48, 57} )
 {
-    // Pointer created to attributes node only if they exist
-    boost::optional< boost::property_tree::ptree& > child =
+    boost::optional< boost::property_tree::ptree& > attributes =
         varTag->get_child_optional("<xmlattr>");
 
-    if(child)
+    if(attributes)
     {
-        if(child.value().count("type"))
-        {
-            // TODO: what if the entered type does not exist?
-            varType = typeMap[varTag->get<std::string>("<xmlattr>.type")];
-        }
+        FindParameters(attributes);
     }
-    else
-    // No Parameters are specified (all default)
+}
+
+void Var::FindParameters(boost::optional< boost::property_tree::ptree& >& attributes)
+{
+    if(!FindType(attributes))
     {
+        std::cout << "Error: Unknown type of variable" << std::endl;
         return;
     }
 
-    // Find the range for var variable
+    // Find range depending on variable type
     if(varType == Type::Number || varType == Type::Float)
     {
-        FindNumericRange(child);
+        FindNumericRange(attributes);
     }
     else
     {
-        FindLexicalRange(child);
+        FindLexicalRange(attributes);
     }
     
     // Find lengh only if needed
@@ -42,24 +41,43 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     }
 }
 
-void Var::FindNumericRange(boost::optional< boost::property_tree::ptree& >& child)
+// Returns true if type is valid, type can be empty
+bool Var::FindType( boost::optional< boost::property_tree::ptree& >& attributes )
+{
+    if(attributes.value().count("type"))
+    {
+        // TODO: Check if type is valid
+
+        varType = typeMap[varTag->get<std::string>("<xmlattr>.type")];
+        return true;
+    }
+
+    return true;
+}
+
+void Var::FindNumericRange(boost::optional< boost::property_tree::ptree& >& attributes)
 {
     // if no range parameter is specified, return
-    if(!child.value().count("range"))
+    if(!attributes.value().count("range"))
     {
         return;
     }
     
 }
 
-void Var::FindLexicalRange(boost::optional< boost::property_tree::ptree& >& child)
+void Var::FindLexicalRange(boost::optional< boost::property_tree::ptree& >& attributes)
 {
     // if no range parameter is specified, set default lexical range and return
-    if(!child.value().count("range"))
+    if(!attributes.value().count("range"))
     {
         range = {97, 122};
         return;
     }
+
+}
+
+void Var::FindLength()
+{
 
 }
 
