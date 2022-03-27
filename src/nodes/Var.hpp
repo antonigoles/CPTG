@@ -26,6 +26,8 @@ class Var : public Node
 
     std::pair< int, int > range;
 
+    int length;
+
     void FindParameters( const boost::optional< boost::property_tree::ptree& >& attributes );
 
     bool FindType( const boost::optional< boost::property_tree::ptree& >& attributes );

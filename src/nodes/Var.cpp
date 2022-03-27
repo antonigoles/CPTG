@@ -107,7 +107,24 @@ void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >
 
 void Var::FindLength(const boost::optional< boost::property_tree::ptree& >& attributes)
 {
-
+    if(attributes.value().count("length"))
+    {
+        int readLength = varTag->get<int>("<xmlattr>.length");
+        
+        if(readLength >= 0)
+        {
+            length = readLength;
+        }
+        else
+        {
+            std::cout << "Error: Length must be positive\nUsing default length instead" << std::endl;
+            length = 3;
+        }
+    }
+    else
+    {
+        length = 3;
+    }
 }
 
 void Var::Print()
