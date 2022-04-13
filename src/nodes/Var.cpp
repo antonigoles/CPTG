@@ -79,7 +79,7 @@ void Var::FindNumericRange(const boost::optional< boost::property_tree::ptree& >
 
     if(std::stoi(splitRange[0]) > std::stoi(splitRange[1]))
     {
-        std::cout << "Error: Range is not valid\nUsing default instead" << std::endl;
+        std::cout << "Error: Numeric range is not valid\nUsing default instead" << std::endl;
         range = {0, 9};
         return;
     }
@@ -116,7 +116,7 @@ void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >
     }
     else
     {
-        std::cout << "Error: Unknown range\nUsed default instead" << std::endl;
+        std::cout << "Error: Unknown lexical range\nUsed default instead" << std::endl;
         lexicalRange = LexicalRange::abc;
     }
 }
