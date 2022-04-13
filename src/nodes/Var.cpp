@@ -167,7 +167,19 @@ void Var::Print()
 
 char Var::GenerateRandomChar()
 {
-    return char(range.first + rand() % (range.second - range.first + 1));
+    char randomChars[3] = { 
+        abcRange[rand() % abcRange.size()],
+        ABCRange[rand() % ABCRange.size()],
+        specialRange[rand() % specialRange.size()]
+    };
+
+    if(lexicalRange == LexicalRange::all)
+    {
+        // TODO: generated characters are not evenly distributed
+        return randomChars[rand() % 3];
+    }
+
+    return randomChars[int(lexicalRange)];
 }
 
 int Var::GenerateRandomNumber()
