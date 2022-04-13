@@ -5,7 +5,7 @@ Var::Var() : varType(Type::Number) { }
 Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) : 
     varTag(tag),
     varType(Type::Number),
-    range( {'0', '9'} )
+    range( {0, 9} )
 {
     srand(time(NULL));
     boost::optional< boost::property_tree::ptree& > attributes =
@@ -172,7 +172,7 @@ char Var::GenerateRandomChar()
 
 int Var::GenerateRandomNumber()
 {
-    return (rand() % (range.second - range.first + 1) + range.first) - '0';
+    return rand() % (range.second - range.first + 1) + range.first;
 }
 
 std::string Var::GetReverseNumber(int generatedNumber)
