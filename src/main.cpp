@@ -6,11 +6,17 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
 
-int main()
+int main(int argc, char** argv)
 {
+    if(argc != 2)
+    {
+        std::cerr << "You must specify a file to parse" << std::endl;
+        return 1;
+    }
+
     Seq root;
     boost::property_tree::ptree tree;
-    boost::property_tree::read_xml("example1.xml", tree);
+    boost::property_tree::read_xml(argv[1], tree);
 
     tree.get_child("test");
 
