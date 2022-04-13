@@ -27,6 +27,10 @@ class Var : public Node
         {"String", Type::String}
     };
 
+    static std::vector<char> abcRange;
+    static std::vector<char> ABCRange;
+    static std::vector<char> specialRange;
+
     std::pair< int, int > range;
 
     int length;
