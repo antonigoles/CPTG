@@ -27,6 +27,9 @@ class Var : public Node
         {"String", Type::String}
     };
 
+    enum class LexicalRange { abc, ABC, special, all };
+    LexicalRange lexicalRange;
+
     static std::vector<char> abcRange;
     static std::vector<char> ABCRange;
     static std::vector<char> specialRange;
