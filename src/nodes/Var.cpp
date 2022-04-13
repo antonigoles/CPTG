@@ -91,7 +91,7 @@ void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >
 {
     if(!attributes.value().count("range"))
     {
-        range = {'a', 'z'};
+        lexicalRange = LexicalRange::abc;
         return;
     }
 
@@ -99,25 +99,25 @@ void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >
 
     if(rangeKey == "abc")
     {
-        range = {'a', 'z'};
+        lexicalRange = LexicalRange::abc;
     }
     if(rangeKey == "ABC")
     {
-        range = {'A', 'Z'};
+        lexicalRange = LexicalRange::ABC;
     }
     else if(rangeKey == "special")
     {
         // TODO: range does not cover all characters
-        range = {':', '@'};
+        lexicalRange = LexicalRange::special;
     }
     else if(rangeKey == "all")
     {
-        range = {'!', '~'};
+        lexicalRange = LexicalRange::all;
     }
     else
     {
         std::cout << "Error: Unknown range\nUsed default instead" << std::endl;
-        range = {'a', 'z'};
+        lexicalRange = LexicalRange::abc;
     }
 }
 
