@@ -172,7 +172,7 @@ char Var::GenerateRandomChar()
 
 int Var::GenerateRandomNumber()
 {
-    return rand() % (range.second - range.first + 1) + range.first;
+    return (rand() % (range.second - range.first + 1) + range.first) - '0';
 }
 
 std::string Var::GetReverseNumber(int generatedNumber)
