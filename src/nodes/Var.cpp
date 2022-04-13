@@ -21,7 +21,7 @@ void Var::FindParameters(const boost::optional< boost::property_tree::ptree& >& 
 {
     if(!FindType(attributes))
     {
-        std::cout << "Error: Unknown type of variable" << std::endl;
+        std::cout << "Error: Unknown type of variable\nUsing default instead" << std::endl;
         return;
     }
 
