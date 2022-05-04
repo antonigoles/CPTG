@@ -197,11 +197,11 @@ ___
 <test>
     <!-- variables can be of different types -->
     <seq times="3">
-        <var type="char" range="abc" />
-        <var type="char" range="ABC" />
-        <var type="char" range="special" />
-        <var type="char" range="all" />
-        <var type="string" range="all" length="5" />
+        <var type="Char" range="abc" />
+        <var type="Char" range="ABC" />
+        <var type="Char" range="special" />
+        <var type="Char" range="all" />
+        <var type="String" range="all" length="5" />
         <br/>
     </seq>
 </test>
