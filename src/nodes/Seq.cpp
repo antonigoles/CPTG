@@ -1,10 +1,9 @@
-#include "Seq.hpp"
+#include "CPTG/nodes/Seq.hpp"
 
 // Creates a shared pointer to nodeType object
 #define SharedNode(nodeType, propTree) \
     std::make_shared<nodeType>( \
-        nodeType(std::make_shared<boost::property_tree::ptree>(propTree)) \
-    )
+        nodeType(std::make_shared<boost::property_tree::ptree>(propTree)))
 
 Seq::Seq() : times(1) { }
 

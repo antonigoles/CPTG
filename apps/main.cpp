@@ -1,10 +1,11 @@
 #include <iostream>
 
-#include "nodes/Seq.hpp"
-
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
+
+#include "CPTG/nodes/Seq.hpp"
+
 
 int main(int argc, char** argv)
 {
@@ -35,6 +36,7 @@ int main(int argc, char** argv)
     root.FindSubNodes();
     root.Print();
 }
+
 
 // Define ranges for VAR type
 std::vector<char> Var::abcRange = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};

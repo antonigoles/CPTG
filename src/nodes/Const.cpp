@@ -1,4 +1,4 @@
-#include "Const.hpp"
+#include "CPTG/nodes/Const.hpp"
 
 Const::Const() : value("") { }
 

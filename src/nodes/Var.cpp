@@ -1,4 +1,4 @@
-#include "Var.hpp"
+#include "CPTG/nodes/Var.hpp"
 
 Var::Var() : varType(Type::Number) { }
 
