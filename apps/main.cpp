@@ -5,6 +5,7 @@
 #include <boost/foreach.hpp>
 
 #include "CPTG/nodes/Seq.hpp"
+#include "CPTG/nodes/Var.hpp"
 
 
 int main(int argc, char** argv)

@@ -1,17 +1,12 @@
 #pragma once
 
-#include <iostream>
 #include <memory>
 #include <unordered_map>
-#include <stdlib.h>
-#include <time.h> 
 
-#include "Node.hpp"
+#include "CPTG/nodes/Node.hpp"
 
 #include <boost/optional/optional.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/algorithm/string.hpp>
 
 class Var : public Node
 {

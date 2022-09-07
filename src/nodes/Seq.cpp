@@ -1,4 +1,13 @@
+#include <iostream>
+
 #include "CPTG/nodes/Seq.hpp"
+#include "CPTG/nodes/Const.hpp"
+#include "CPTG/nodes/Br.hpp"
+#include "CPTG/nodes/Var.hpp"
+
+#include <boost/optional/optional.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/foreach.hpp>
 
 // Creates a shared pointer to nodeType object
 #define SharedNode(nodeType, propTree) \

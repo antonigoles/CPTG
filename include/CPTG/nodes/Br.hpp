@@ -1,8 +1,6 @@
 #pragma once
 
-#include <iostream>
-
-#include "Node.hpp"
+#include "CPTG/nodes/Node.hpp"
 
 class Br : public Node
 {

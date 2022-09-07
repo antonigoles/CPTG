@@ -2,17 +2,10 @@
 
 #include <vector>
 #include <memory>
-#include <iostream>
 
-#include "Node.hpp"
-#include "Const.hpp"
-#include "Br.hpp"
-#include "Var.hpp"
+#include "CPTG/nodes/Node.hpp"
 
-#include <boost/optional/optional.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/foreach.hpp>
 
 class Seq : public Node
 {

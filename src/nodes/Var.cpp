@@ -1,4 +1,11 @@
+#include <iostream>
+#include <stdlib.h>
+#include <time.h> 
+
 #include "CPTG/nodes/Var.hpp"
+
+#include <boost/algorithm/string.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 
 Var::Var() : varType(Type::Number) { }
 

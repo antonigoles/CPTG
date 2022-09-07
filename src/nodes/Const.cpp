@@ -1,4 +1,9 @@
+#include <iostream>
+
 #include "CPTG/nodes/Const.hpp"
+
+#include <boost/optional/optional.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 
 Const::Const() : value("") { }
 
