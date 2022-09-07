@@ -7,6 +7,7 @@
 #include "CPTG/nodes/Seq.hpp"
 #include "CPTG/nodes/Var.hpp"
 
+typedef boost::property_tree::ptree ptree;
 
 int main(int argc, char** argv)
 {
@@ -17,18 +18,18 @@ int main(int argc, char** argv)
     }
 
     Seq root;
-    boost::property_tree::ptree tree;
+    ptree tree;
     boost::property_tree::read_xml(argv[1], tree);
 
     tree.get_child("test");
 
     // Iterate through base tags
-    BOOST_FOREACH(boost::property_tree::ptree::value_type& child, tree)
+    BOOST_FOREACH(ptree::value_type& child, tree)
     {   
         if(child.first == "test")
         {
             root = Seq(
-                std::make_shared< boost::property_tree::ptree >(child.second),
+                std::make_shared< ptree >(child.second),
                 1
             );
         }
