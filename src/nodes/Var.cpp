@@ -9,14 +9,13 @@
 
 Var::Var() : varType(Type::Number) { }
 
-Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) : 
+Var::Var(std::shared_ptr< ptree > tag) : 
     varTag(tag),
     varType(Type::Number),
     range( {0, 9} )
 {
     srand(time(NULL));
-    boost::optional< boost::property_tree::ptree& > attributes =
-        varTag->get_child_optional("<xmlattr>");
+    boost::optional< ptree& > attributes = varTag->get_child_optional("<xmlattr>");
 
     if(attributes)
     {
@@ -24,7 +23,7 @@ Var::Var(std::shared_ptr< boost::property_tree::ptree > tag) :
     }
 }
 
-void Var::FindParameters(const boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindParameters(const boost::optional< ptree& >& attributes)
 {
     if(!FindType(attributes))
     {
@@ -54,7 +53,7 @@ void Var::FindParameters(const boost::optional< boost::property_tree::ptree& >& 
 }
 
 // Returns true if type is valid, type can be empty
-bool Var::FindType(const boost::optional< boost::property_tree::ptree& >& attributes)
+bool Var::FindType(const boost::optional< ptree& >& attributes)
 {
     if(!attributes.value().count("type"))
     {
@@ -71,7 +70,7 @@ bool Var::FindType(const boost::optional< boost::property_tree::ptree& >& attrib
     return true;
 }
 
-void Var::FindNumericRange(const boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindNumericRange(const boost::optional< ptree& >& attributes)
 {
     if(!attributes.value().count("range"))
     {
@@ -94,7 +93,7 @@ void Var::FindNumericRange(const boost::optional< boost::property_tree::ptree& >
     range = {std::stoi(splitRange[0]), std::stoi(splitRange[1])};
 }
 
-void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindLexicalRange(const boost::optional< ptree& >& attributes)
 {
     if(!attributes.value().count("range"))
     {
@@ -128,7 +127,7 @@ void Var::FindLexicalRange(const boost::optional< boost::property_tree::ptree& >
     }
 }
 
-void Var::FindLength(const boost::optional< boost::property_tree::ptree& >& attributes)
+void Var::FindLength(const boost::optional< ptree& >& attributes)
 {
     if(!attributes.value().count("length"))
     {

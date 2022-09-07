@@ -8,9 +8,11 @@
 #include <boost/optional/optional.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+typedef boost::property_tree::ptree ptree;
+
 class Var : public Node
 {
-    std::shared_ptr< boost::property_tree::ptree > varTag;
+    std::shared_ptr< ptree > varTag;
 
     enum class Type { Char, Number, Float, String };
     Type varType;
@@ -33,12 +35,12 @@ class Var : public Node
 
     int length;
 
-    void FindParameters( const boost::optional< boost::property_tree::ptree& >& attributes );
+    void FindParameters( const boost::optional< ptree& >& attributes );
 
-    bool FindType( const boost::optional< boost::property_tree::ptree& >& attributes );
-    void FindNumericRange( const boost::optional< boost::property_tree::ptree& >& attributes );
-    void FindLexicalRange( const boost::optional< boost::property_tree::ptree& >& attributes );
-    void FindLength( const boost::optional< boost::property_tree::ptree& >& attributes );
+    bool FindType( const boost::optional< ptree& >& attributes );
+    void FindNumericRange( const boost::optional< ptree& >& attributes );
+    void FindLexicalRange( const boost::optional< ptree& >& attributes );
+    void FindLength( const boost::optional< ptree& >& attributes );
 
     char GenerateRandomChar();
     int GenerateRandomNumber();
@@ -46,7 +48,7 @@ class Var : public Node
 
 public:
     Var();
-    Var( std::shared_ptr< boost::property_tree::ptree > );
+    Var(std::shared_ptr< ptree >);
 
     void Print() override;
 };
