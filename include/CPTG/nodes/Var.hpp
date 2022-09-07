@@ -27,9 +27,9 @@ class Var : public Node
     enum class LexicalRange { abc, ABC, special, all };
     LexicalRange lexicalRange;
 
-    static std::vector<char> abcRange;
-    static std::vector<char> ABCRange;
-    static std::vector<char> specialRange;
+    static const std::vector<char> abcRange;
+    static const std::vector<char> ABCRange;
+    static const std::vector<char> specialRange;
 
     std::pair< int, int > range;
 
