@@ -1,19 +1,20 @@
 set(CMAKE_REQUIRED_VERSION 3.14)
 cmake_minimum_required(VERSION ${CMAKE_REQUIRED_VERSION})
 
-project(Local-CPTG LANGUAGES CXX VERSION 0.1.0)
+project(
+	Local-CPTG 
+	LANGUAGES CXX 
+	VERSION 0.2.0)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+	set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+endif()
 
-set(INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
-
-# boost
 find_package(Boost 1.67.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
+add_subdirectory(src/nodes)
 
-add_subdirectory(src)
+add_subdirectory(apps)

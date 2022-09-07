@@ -1,6 +1,10 @@
 # Do not include generated files
 build/*
-.vscode/settings.json
+
+# Ignore vs / vsc files
+.vscode/
+.vs/
+out/
 
 # Do not include binaries folder
 bin/*
