@@ -7,12 +7,11 @@
 
 Const::Const() : value("") { }
 
-Const::Const(std::shared_ptr< boost::property_tree::ptree > tag) : 
+Const::Const(std::shared_ptr< ptree > tag) : 
     value("")
 {
     // Pointer created to attributes node only if they exist
-    boost::optional< boost::property_tree::ptree& > child =
-        tag->get_child_optional("<xmlattr>");
+    boost::optional< ptree& > child = tag->get_child_optional("<xmlattr>");
 
     if(child)
     {
