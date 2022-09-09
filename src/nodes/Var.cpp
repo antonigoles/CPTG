@@ -33,8 +33,8 @@ void Var::FindParameters(const ptree& attributes)
 		return;
 	}
 
-	// Find range depending on variable type
-	if(varType == Type::Number || varType == Type::Float)
+	bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
+	if(bIsNumeric)
 	{
 		FindNumericRange(attributes);
 	}
@@ -43,7 +43,6 @@ void Var::FindParameters(const ptree& attributes)
 		FindLexicalRange(attributes);
 	}
 	
-	// Determin the length for text types
 	if(varType == Type::String || varType == Type::Float)
 	{
 		FindLength(attributes);
@@ -77,23 +76,27 @@ void Var::FindNumericRange(const ptree& attributes)
 {
 	if(!attributes.count("range"))
 	{
+		// It is permited to not specify range
 		range = {0, 9};
 		return;
 	}
 
-	std::string rangeStr = attributes.get<std::string>("range");
+	auto rangeStr = attributes.get<std::string>("range");
 	std::vector< std::string > splitRange;
 
 	boost::split(splitRange, rangeStr, boost::is_any_of(":"));
 
-	if(std::stoi(splitRange[0]) > std::stoi(splitRange[1]))
+	int rangeStart = std::stoi(splitRange[0]);
+	int rangeEnd = std::stoi(splitRange[1]);
+	if (rangeStart < rangeEnd)
 	{
-		std::cout << "Error: Numeric range is not valid\nUsing default instead" << std::endl;
-		range = {0, 9};
-		return;
+		range = { rangeStart, rangeEnd };
 	}
-
-	range = {std::stoi(splitRange[0]), std::stoi(splitRange[1])};
+	else
+	{
+		std::cout << "Error: First range element is larger than the second one\nUsing default instead" << std::endl;
+		range = {0, 9};
+	}
 }
 
 void Var::FindLexicalRange(const ptree& attributes)
