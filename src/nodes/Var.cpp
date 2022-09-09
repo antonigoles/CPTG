@@ -12,7 +12,7 @@ Var::Var() : varType(Type::Number), range({0, 9}) { }
 
 Var::Var(std::shared_ptr< ptree > tag) : varTag(tag)
 {
-	srand(time(NULL));
+	srand((int)time(NULL));
 	auto attributes = varTag->get_child_optional("<xmlattr>");
 
 	if(attributes != boost::none)
@@ -43,7 +43,7 @@ void Var::FindParameters(const ptree& attributes)
 	if(varType == Type::String || varType == Type::Float)
 	{
 		FindLength(attributes);
-		power = pow(10, length);
+		power = (int)pow(10, length);
 	}
 	else if(varType == Type::Char)
 	{
@@ -209,7 +209,7 @@ char Var::GenerateRandomChar() const
 	{
 		return ABCRange[rand() % ABCRange.size()];
 	}
-	if (lexicalRange == LexicalRange::special)
+	else
 	{
 		return specialRange[rand() % specialRange.size()];
 	}
