@@ -15,21 +15,18 @@ class Var : public Node
 	std::shared_ptr< ptree > varTag;
 
 	enum class Type { Char, Number, Float, String };
+	static const std::unordered_map< std::string, Type > typeMap; 
 	Type varType;
 
-	static const std::unordered_map< std::string, Type > typeMap; 
-
 	enum class LexicalRange { abc, ABC, special, all };
-	LexicalRange lexicalRange;
-
 	static const std::unordered_map < std::string, LexicalRange > lexicalRangesMap;
+	LexicalRange lexicalRange;
 
 	static const std::vector<char> abcRange;
 	static const std::vector<char> ABCRange;
 	static const std::vector<char> specialRange;
 
 	std::pair< int, int > range;
-
 	int length;
 	int power;
 
