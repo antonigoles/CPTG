@@ -17,15 +17,12 @@ class Var : public Node
     enum class Type { Char, Number, Float, String };
     Type varType;
 
-    std::unordered_map< std::string, Type> typeMap = {
-        {"Char", Type::Char},
-        {"Number", Type::Number},
-        {"Float", Type::Float},
-        {"String", Type::String}
-    };
+    static const std::unordered_map< std::string, Type > typeMap; 
 
     enum class LexicalRange { abc, ABC, special, all };
     LexicalRange lexicalRange;
+
+    static const std::unordered_map < std::string, LexicalRange > lexicalRangesMap;
 
     static const std::vector<char> abcRange;
     static const std::vector<char> ABCRange;

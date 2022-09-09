@@ -61,7 +61,7 @@ void Var::FindType(const ptree& attributes)
 	const auto type = attributes.get<std::string>("type");
 	if(typeMap.find(type) != typeMap.end())
 	{
-		varType = typeMap[type];
+		varType = typeMap.at(type);
 	}
 	else
 	{
@@ -100,27 +100,15 @@ void Var::FindLexicalRange(const ptree& attributes)
 {
 	if(!attributes.count("range"))
 	{
+		// It is permited to not specify range
 		lexicalRange = LexicalRange::abc;
 		return;
 	}
 
-	std::string rangeKey = varTag->get<std::string>("<xmlattr>.range");
-
-	if(rangeKey == "abc")
+	auto rangeKey = varTag->get<std::string>("<xmlattr>.range");
+	if (lexicalRangesMap.find(rangeKey) != lexicalRangesMap.end())
 	{
-		lexicalRange = LexicalRange::abc;
-	}
-	if(rangeKey == "ABC")
-	{
-		lexicalRange = LexicalRange::ABC;
-	}
-	else if(rangeKey == "special")
-	{
-		lexicalRange = LexicalRange::special;
-	}
-	else if(rangeKey == "all")
-	{
-		lexicalRange = LexicalRange::all;
+		lexicalRange = lexicalRangesMap.at(rangeKey);
 	}
 	else
 	{
@@ -229,3 +217,17 @@ std::string Var::GetReverseNumber(int generatedNumber)
 const std::vector<char> Var::abcRange = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 const std::vector<char> Var::ABCRange = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 const std::vector<char> Var::specialRange = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\', ':', ';', '"', '\'', '<', ',', '>', '.', '?', '/', '~', '|' };
+
+const std::unordered_map<std::string, Var::Type> Var::typeMap = {
+	{"Char", Type::Char},
+	{"Number", Type::Number},
+	{"Float", Type::Float},
+	{"String", Type::String}
+};
+
+const std::unordered_map < std::string, Var::LexicalRange > Var::lexicalRangesMap = {
+	{"abc", LexicalRange::abc},
+	{"ABC", LexicalRange::ABC},
+	{"special", LexicalRange::special},
+	{"all", LexicalRange::all}
+};
