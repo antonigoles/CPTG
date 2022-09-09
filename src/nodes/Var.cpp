@@ -1,18 +1,19 @@
 #include <iostream>
 #include <stdlib.h>
-#include <time.h> 
+#include <time.h>
+#include <math.h>
 
 #include "CPTG/nodes/Var.hpp"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-Var::Var() : varType(Type::Number) { }
+Var::Var() : varType(Type::Number), range({0, 9}) { }
 
 Var::Var(std::shared_ptr< ptree > tag) : varTag(tag)
 {
 	srand(time(NULL));
-	boost::optional< ptree& > attributes = varTag->get_child_optional("<xmlattr>");
+	auto attributes = varTag->get_child_optional("<xmlattr>");
 
 	if(attributes != boost::none)
 	{
@@ -42,6 +43,7 @@ void Var::FindParameters(const ptree& attributes)
 	if(varType == Type::String || varType == Type::Float)
 	{
 		FindLength(attributes);
+		power = pow(10, length);
 	}
 	else if(varType == Type::Char)
 	{
@@ -121,12 +123,12 @@ void Var::FindLength(const ptree& attributes)
 {
 	if(!attributes.count("length"))
 	{
+		// It is permited to not specify length
 		length = 3;
 		return;
 	}
 
-	int readLength = varTag->get<int>("<xmlattr>.length");
-		
+	int readLength = varTag->get<int>("<xmlattr>.length");	
 	if(readLength >= 0)
 	{
 		length = readLength;
@@ -140,77 +142,67 @@ void Var::FindLength(const ptree& attributes)
 
 void Var::Print()
 {
-	if(varType == Type::Number || varType == Type::Float)
+	bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
+	if(bIsNumeric)
 	{
 		int randomNumber = GenerateRandomNumber();
 		std::cout << randomNumber;
 
 		if(varType == Type::Float)
 		{
-			std::cout << GetReverseNumber(randomNumber);
+			std::cout << GenerateDecimalPlaces(randomNumber);
 		}
 	}
-	else if(varType == Type::String || varType == Type::Char)
+	else
 	{
 		for(int i = 0; i < length; i++)
 		{
 			std::cout << GenerateRandomChar();
 		}
 	}
+}
+
+int Var::GenerateRandomNumber() const
+{
+	return rand() % (range.second - range.first + 1) + range.first;
+}
+
+std::string Var::GenerateDecimalPlaces(int generatedNumber) const
+{
+	// Avoid exceeding provided range
+	if(generatedNumber == range.second)
+	{
+		return "";
+	}
+
+	const int decPlacesNumbers = rand() % power;
+
+	if (decPlacesNumbers == 0)
+	{
+		return "";
+	}
+
+	std::string decPlaces = std::to_string(decPlacesNumbers);
+	std::reverse(decPlaces.begin(), decPlaces.end());
 	
-	std::cout << " ";
+	return "." + decPlaces;
 }
 
 char Var::GenerateRandomChar()
 {
-	char randomChars[3] = { 
+	char randomChars[3] = {
 		abcRange[rand() % abcRange.size()],
 		ABCRange[rand() % ABCRange.size()],
 		specialRange[rand() % specialRange.size()]
 	};
 
-	if(lexicalRange == LexicalRange::all)
+	if (lexicalRange == LexicalRange::all)
 	{
 		// TODO: generated characters are not evenly distributed
 		return randomChars[rand() % 3];
 	}
 
 	return randomChars[int(lexicalRange)];
-}
-
-int Var::GenerateRandomNumber()
-{
-	return rand() % (range.second - range.first + 1) + range.first;
-}
-
-std::string Var::GetReverseNumber(int generatedNumber)
-{
-	// To avoid exceeding provided range
-	if(generatedNumber == range.second)
-	{
-		return "";
-	}
-
-	std::stringstream ss, tempStream;
-	
-	for(int i = 0; i < length; i++)
-	{
-		tempStream << char('0' + rand() % 10);
-		if(tempStream.str().back() != '0')
-		{
-			ss << tempStream.str();
-			tempStream.str("");
-		}
-	}
-
-	if(!ss.str().empty())
-	{
-		ss << '.';
-	}
-
-	std::string str = ss.str();
-	std::reverse(str.begin(), str.end());
-	return str;
 }
 
 // Define ranges for VAR type

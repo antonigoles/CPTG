@@ -31,6 +31,7 @@ class Var : public Node
     std::pair< int, int > range;
 
     int length;
+    int power;
 
     void FindParameters( const ptree&attributes );
 
@@ -39,9 +40,9 @@ class Var : public Node
     void FindLexicalRange( const ptree& attributes );
     void FindLength( const ptree& attributes );
 
+    int GenerateRandomNumber() const;
+    std::string GenerateDecimalPlaces( int generatedNumber ) const;
     char GenerateRandomChar();
-    int GenerateRandomNumber();
-    std::string GetReverseNumber( int generatedNumber );
 
 public:
     Var();
