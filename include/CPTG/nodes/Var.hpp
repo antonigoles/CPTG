@@ -35,12 +35,12 @@ class Var : public Node
 
     int length;
 
-    void FindParameters( const boost::optional< ptree& >& attributes );
+    void FindParameters( const ptree&attributes );
 
-    bool FindType( const boost::optional< ptree& >& attributes );
-    void FindNumericRange( const boost::optional< ptree& >& attributes );
-    void FindLexicalRange( const boost::optional< ptree& >& attributes );
-    void FindLength( const boost::optional< ptree& >& attributes );
+    bool FindType( const ptree& attributes );
+    void FindNumericRange( const ptree& attributes );
+    void FindLexicalRange( const ptree& attributes );
+    void FindLength( const ptree& attributes );
 
     char GenerateRandomChar();
     int GenerateRandomNumber();
