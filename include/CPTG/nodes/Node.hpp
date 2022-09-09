@@ -7,6 +7,6 @@ public:
 	virtual ~Node() = default;
 
 	// Prints the contents of a node to the standard output
-	virtual void Print() = 0;
+	virtual void Print() const = 0;
 
 };

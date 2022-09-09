@@ -18,8 +18,8 @@ Seq::Seq() : times(1) { }
 
 Seq::Seq(std::shared_ptr< ptree > sT) : seqTag(sT)
 {
-	boost::optional< ptree& > child = seqTag->get_child_optional("<xmlattr>");
-	bool attributeExists = child != boost::none && child.value().count("times");
+	auto attributes = seqTag->get_child_optional("<xmlattr>");
+	bool attributeExists = attributes != boost::none && attributes.value().count("times") != 0;
 
 	if(attributeExists)
 	{
@@ -64,7 +64,7 @@ void Seq::FindSubNodes()
 	}
 }
 
-void Seq::Print()
+void Seq::Print() const
 {
 	for(int i = 0; i < times; i++)
 	{

@@ -30,7 +30,7 @@ void Var::FindParameters(const ptree& attributes)
 {
 	FindType(attributes);
 
-	bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
+	const bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
 	if(bIsNumeric)
 	{
 		FindNumericRange(attributes);
@@ -85,8 +85,8 @@ void Var::FindNumericRange(const ptree& attributes)
 
 	boost::split(splitRange, rangeStr, boost::is_any_of(":"));
 
-	int rangeStart = std::stoi(splitRange[0]);
-	int rangeEnd = std::stoi(splitRange[1]);
+	const int rangeStart = std::stoi(splitRange[0]);
+	const int rangeEnd = std::stoi(splitRange[1]);
 	if (rangeStart < rangeEnd)
 	{
 		range = { rangeStart, rangeEnd };
@@ -107,7 +107,7 @@ void Var::FindLexicalRange(const ptree& attributes)
 		return;
 	}
 
-	auto rangeKey = varTag->get<std::string>("<xmlattr>.range");
+	const auto rangeKey = varTag->get<std::string>("<xmlattr>.range");
 	if (lexicalRangesMap.find(rangeKey) != lexicalRangesMap.end())
 	{
 		lexicalRange = lexicalRangesMap.at(rangeKey);
@@ -128,7 +128,7 @@ void Var::FindLength(const ptree& attributes)
 		return;
 	}
 
-	int readLength = varTag->get<int>("<xmlattr>.length");	
+	const int readLength = varTag->get<int>("<xmlattr>.length");	
 	if(readLength >= 0)
 	{
 		length = readLength;
@@ -140,12 +140,12 @@ void Var::FindLength(const ptree& attributes)
 	}
 }
 
-void Var::Print()
+void Var::Print() const
 {
-	bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
+	const bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
 	if(bIsNumeric)
 	{
-		int randomNumber = GenerateRandomNumber();
+		const int randomNumber = GenerateRandomNumber();
 		std::cout << randomNumber;
 
 		if(varType == Type::Float)

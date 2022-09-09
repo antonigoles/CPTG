@@ -9,8 +9,8 @@ Const::Const() : value("") { }
 
 Const::Const(std::shared_ptr< ptree > tag)
 {
-	boost::optional< ptree& > child = tag->get_child_optional("<xmlattr>");
-	bool attributeExists = child != boost::none && child.value().count("value");
+	auto attributes = tag->get_child_optional("<xmlattr>");
+	bool attributeExists = attributes != boost::none && attributes.value().count("value") != 0;
 
 	if(attributeExists)
 	{
@@ -22,7 +22,7 @@ Const::Const(std::shared_ptr< ptree > tag)
 	}
 }
 
-void Const::Print()
+void Const::Print() const
 {
 	std::cout << value << ' ';
 }

@@ -46,5 +46,5 @@ public:
 	Var();
 	Var(std::shared_ptr< ptree >);
 
-	void Print() override;
+	void Print() const override;
 };

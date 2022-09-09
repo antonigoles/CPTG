@@ -4,7 +4,7 @@
 
 Br::Br() { }
 
-void Br::Print()
+void Br::Print() const
 {
     std::cout << '\n';
 }
