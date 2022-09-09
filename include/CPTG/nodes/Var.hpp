@@ -12,41 +12,42 @@ typedef boost::property_tree::ptree ptree;
 
 class Var : public Node
 {
-    std::shared_ptr< ptree > varTag;
+	std::shared_ptr< ptree > varTag;
 
-    enum class Type { Char, Number, Float, String };
-    Type varType;
+	enum class Type { Char, Number, Float, String };
+	Type varType;
 
-    static const std::unordered_map< std::string, Type > typeMap; 
+	static const std::unordered_map< std::string, Type > typeMap; 
 
-    enum class LexicalRange { abc, ABC, special, all };
-    LexicalRange lexicalRange;
+	enum class LexicalRange { abc, ABC, special, all };
+	LexicalRange lexicalRange;
 
-    static const std::unordered_map < std::string, LexicalRange > lexicalRangesMap;
+	static const std::unordered_map < std::string, LexicalRange > lexicalRangesMap;
 
-    static const std::vector<char> abcRange;
-    static const std::vector<char> ABCRange;
-    static const std::vector<char> specialRange;
+	static const std::vector<char> abcRange;
+	static const std::vector<char> ABCRange;
+	static const std::vector<char> specialRange;
 
-    std::pair< int, int > range;
+	std::pair< int, int > range;
 
-    int length;
-    int power;
+	int length;
+	int power;
 
-    void FindParameters( const ptree&attributes );
+	void FindParameters( const ptree&attributes );
 
-    void FindType( const ptree& attributes );
-    void FindNumericRange( const ptree& attributes );
-    void FindLexicalRange( const ptree& attributes );
-    void FindLength( const ptree& attributes );
+	void FindType( const ptree& attributes );
+	void FindNumericRange( const ptree& attributes );
+	void FindLexicalRange( const ptree& attributes );
+	void FindLength( const ptree& attributes );
 
-    int GenerateRandomNumber() const;
-    std::string GenerateDecimalPlaces( int generatedNumber ) const;
-    char GenerateRandomChar();
+	int GenerateRandomNumber() const;
+	std::string GenerateDecimalPlaces( int generatedNumber ) const;
+	char GenerateRandomChar() const;
+	LexicalRange chooseRange() const;
 
 public:
-    Var();
-    Var(std::shared_ptr< ptree >);
+	Var();
+	Var(std::shared_ptr< ptree >);
 
-    void Print() override;
+	void Print() override;
 };

@@ -188,24 +188,52 @@ std::string Var::GenerateDecimalPlaces(int generatedNumber) const
 	return "." + decPlaces;
 }
 
-char Var::GenerateRandomChar()
+char Var::GenerateRandomChar() const
 {
-	char randomChars[3] = {
-		abcRange[rand() % abcRange.size()],
-		ABCRange[rand() % ABCRange.size()],
-		specialRange[rand() % specialRange.size()]
-	};
-
+	LexicalRange typeToGenerate;
 	if (lexicalRange == LexicalRange::all)
 	{
-		// TODO: generated characters are not evenly distributed
-		return randomChars[rand() % 3];
+		typeToGenerate = chooseRange();
+	}
+	else
+	{
+		typeToGenerate = lexicalRange;
 	}
 
-	return randomChars[int(lexicalRange)];
+	
+	if (lexicalRange == LexicalRange::abc)
+	{
+		return abcRange[rand() % abcRange.size()];
+	}
+	else if (lexicalRange == LexicalRange::ABC)
+	{
+		return ABCRange[rand() % ABCRange.size()];
+	}
+	if (lexicalRange == LexicalRange::special)
+	{
+		return specialRange[rand() % specialRange.size()];
+	}
 }
 
-// Define ranges for VAR type
+Var::LexicalRange Var::chooseRange() const
+{
+	const int sumOfChars = abcRange.size() + ABCRange.size() + specialRange.size();
+	const int charToUse = rand() % sumOfChars;
+
+	if (charToUse < abcRange.size())
+	{
+		return LexicalRange::abc;
+	}
+	else if (charToUse - abcRange.size() < ABCRange.size())
+	{
+		return LexicalRange::ABC;
+	}
+	else
+	{
+		return LexicalRange::special;
+	}
+}
+
 const std::vector<char> Var::abcRange = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 const std::vector<char> Var::ABCRange = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 const std::vector<char> Var::specialRange = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\', ':', ';', '"', '\'', '<', ',', '>', '.', '?', '/', '~', '|' };
