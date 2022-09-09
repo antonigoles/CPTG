@@ -29,7 +29,7 @@ void Var::FindParameters(const ptree& attributes)
 {
 	if(!FindType(attributes))
 	{
-		std::cout << "Error: Unknown type of variable\nUsing default instead" << std::endl;
+		std::cout << "Error: Unknown variable type provided\nUsing default instead" << std::endl;
 		return;
 	}
 
@@ -43,7 +43,7 @@ void Var::FindParameters(const ptree& attributes)
 		FindLexicalRange(attributes);
 	}
 	
-	// Find lengh only if needed
+	// Determin the length for text types
 	if(varType == Type::String || varType == Type::Float)
 	{
 		FindLength(attributes);
@@ -54,22 +54,23 @@ void Var::FindParameters(const ptree& attributes)
 	}
 }
 
-// Returns true if type is valid, type can be empty
 bool Var::FindType(const ptree& attributes)
 {
-	if(!attributes.count("type"))
+	if(attributes.count("type") == 0)
 	{
+		// It is permited to not specify type
+		varType = Type::Number;
+		return true; 
+	}
+
+	const auto type = attributes.get<std::string>("type");
+	if(typeMap.find(type) != typeMap.end())
+	{
+		varType = typeMap[type];
 		return true;
 	}
-
-	// If type is not in typemap, return false
-	if(typeMap.find(attributes.get<std::string>("type")) == typeMap.end())
-	{
-		return false;
-	}
-
-	varType = typeMap[varTag->get<std::string>("<xmlattr>.type")];
-	return true;
+	
+	return false;
 }
 
 void Var::FindNumericRange(const ptree& attributes)
