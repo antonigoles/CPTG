@@ -16,19 +16,18 @@
 
 Seq::Seq() : times(1) { }
 
-Seq::Seq(std::shared_ptr< ptree > sT) : 
-	seqTag(sT),
-	times(1)
+Seq::Seq(std::shared_ptr< ptree > sT) : seqTag(sT)
 {
-	// Times tag is not mandatory - it might not be present (use default value in this case)
 	boost::optional< ptree& > child = seqTag->get_child_optional("<xmlattr>");
+	bool attributeExists = child != boost::none && child.value().count("times");
 
-	if(child)
+	if(attributeExists)
 	{
-		if(child.value().count("times"))
-		{
-			times = seqTag->get<int>("<xmlattr>.times");
-		}
+		times = seqTag->get<int>("<xmlattr>.times");
+	}
+	else
+	{
+		times = 1;
 	}
 
 	FindSubNodes();

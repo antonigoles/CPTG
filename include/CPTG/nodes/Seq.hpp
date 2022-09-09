@@ -19,10 +19,8 @@ class Seq : public Node
 public:
 	Seq();
 	
-	// Finds the times attribute from ptree
 	Seq( std::shared_ptr< ptree > );
 	
-	// The times variable is provided by on construction
 	Seq( std::shared_ptr< ptree >, int );
 
 	void FindSubNodes();
