@@ -7,5 +7,5 @@ class Br : public Node
 public:
     Br();
 
-    void Print() const override;
+    std::string getString() const override;
 };

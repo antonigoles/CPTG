@@ -36,5 +36,5 @@ int main(int argc, char** argv)
     }
 
     root.FindSubNodes();
-    root.Print();
+    std::cout << root;
 }

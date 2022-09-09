@@ -4,7 +4,7 @@
 
 Br::Br() { }
 
-void Br::Print() const
+std::string Br::getString() const
 {
-    std::cout << '\n';
+    return "\n";
 }

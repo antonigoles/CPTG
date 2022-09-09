@@ -140,26 +140,30 @@ void Var::FindLength(const ptree& attributes)
 	}
 }
 
-void Var::Print() const
+std::string Var::getString() const
 {
+	std::string result = "";
+	
 	const bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
 	if(bIsNumeric)
 	{
 		const int randomNumber = GenerateRandomNumber();
-		std::cout << randomNumber;
+		result += std::to_string(randomNumber);
 
 		if(varType == Type::Float)
 		{
-			std::cout << GenerateDecimalPlaces(randomNumber);
+			result += GenerateDecimalPlaces(randomNumber);
 		}
 	}
 	else
 	{
 		for(int i = 0; i < length; i++)
 		{
-			std::cout << GenerateRandomChar();
+			result += GenerateRandomChar();
 		}
 	}
+
+	return result + " ";
 }
 
 int Var::GenerateRandomNumber() const

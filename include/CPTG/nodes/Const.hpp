@@ -16,5 +16,5 @@ public:
     Const();
     Const( std::shared_ptr< ptree > );
 
-    void Print() const override;
+    std::string getString() const override;
 };

@@ -64,13 +64,16 @@ void Seq::FindSubNodes()
 	}
 }
 
-void Seq::Print() const
+std::string Seq::getString() const
 {
+	std::string result = "";
 	for(int i = 0; i < times; i++)
 	{
 		for(auto& node : subnodes)
 		{
-			node->Print();
+			result += node->getString();
 		}
 	}
+
+	return result;
 }

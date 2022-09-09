@@ -24,5 +24,5 @@ public:
 	Seq( std::shared_ptr< ptree >, int );
 
 	void FindSubNodes();
-	void Print() const override;
+	std::string getString() const override;
 };

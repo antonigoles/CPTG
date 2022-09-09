@@ -22,7 +22,7 @@ Const::Const(std::shared_ptr< ptree > tag)
 	}
 }
 
-void Const::Print() const
+std::string Const::getString() const
 {
-	std::cout << value << ' ';
+	return value + ' ';
 }
