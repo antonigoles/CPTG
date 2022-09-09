@@ -27,11 +27,7 @@ Var::Var(std::shared_ptr< ptree > tag) : varTag(tag)
 
 void Var::FindParameters(const ptree& attributes)
 {
-	if(!FindType(attributes))
-	{
-		std::cout << "Error: Unknown variable type provided\nUsing default instead" << std::endl;
-		return;
-	}
+	FindType(attributes);
 
 	bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
 	if(bIsNumeric)
@@ -53,23 +49,24 @@ void Var::FindParameters(const ptree& attributes)
 	}
 }
 
-bool Var::FindType(const ptree& attributes)
+void Var::FindType(const ptree& attributes)
 {
 	if(attributes.count("type") == 0)
 	{
 		// It is permited to not specify type
 		varType = Type::Number;
-		return true; 
+		return; 
 	}
 
 	const auto type = attributes.get<std::string>("type");
 	if(typeMap.find(type) != typeMap.end())
 	{
 		varType = typeMap[type];
-		return true;
 	}
-	
-	return false;
+	else
+	{
+		std::cout << "Error: Unknown variable type provided\nUsing default instead" << std::endl;
+	}
 }
 
 void Var::FindNumericRange(const ptree& attributes)

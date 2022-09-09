@@ -37,7 +37,7 @@ class Var : public Node
 
     void FindParameters( const ptree&attributes );
 
-    bool FindType( const ptree& attributes );
+    void FindType( const ptree& attributes );
     void FindNumericRange( const ptree& attributes );
     void FindLexicalRange( const ptree& attributes );
     void FindLength( const ptree& attributes );
