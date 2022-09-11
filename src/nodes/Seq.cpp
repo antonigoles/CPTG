@@ -35,7 +35,10 @@ Seq::Seq(std::shared_ptr< ptree > sT) : seqTag(sT)
 
 Seq::Seq(std::shared_ptr< ptree > sT, int times) : 
 	seqTag(sT),
-	times(times) { }
+	times(times) 
+{
+	FindSubNodes();
+}
 
 // TODO: Transform Node to act as a factory to clean up this part of code
 void Seq::FindSubNodes()
