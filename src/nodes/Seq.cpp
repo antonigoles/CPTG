@@ -11,52 +11,46 @@
 
 using namespace cptg;
 
-// Creates a shared pointer to nodeType object
-#define SharedNode(nodeType, propTree)                                         \
-	std::make_shared< nodeType >(nodeType(std::make_shared< ptree >(propTree)))
-
 Seq::Seq() : times(1) { }
 
-Seq::Seq(std::shared_ptr< ptree > seqTag) : seqTag(seqTag)
+Seq::Seq(ptree& seqTag)
 {
-	auto attributes = seqTag->get_child_optional("<xmlattr>");
+	auto attributes = seqTag.get_child_optional("<xmlattr>");
 	bool attributeExists =
 		attributes != boost::none && attributes.value().count("times") != 0;
 
 	if(attributeExists)
 	{
-		times = seqTag->get< int >("<xmlattr>.times");
+		times = seqTag.get< int >("<xmlattr>.times");
 	}
 	else
 	{
 		times = 1;
 	}
 
-	FindSubNodes();
+	FindSubNodes(seqTag);
 }
 
-Seq::Seq(std::shared_ptr< ptree > seqTag, int times) :
-	seqTag(seqTag), times(times)
+Seq::Seq(ptree& seqTag, int times) : times(times)
 {
-	FindSubNodes();
+	FindSubNodes(seqTag);
 }
 
-// TODO: Transform Node to act as a factory to clean up this part of code
-void Seq::FindSubNodes()
+void Seq::FindSubNodes(ptree& seqTag)
 {
-	BOOST_FOREACH(ptree::value_type& child, (*seqTag))
+	BOOST_FOREACH(ptree::value_type& child, seqTag)
 	{
 		if(child.first == "seq")
 		{
-			subnodes.push_back(SharedNode(Seq, child.second));
+			subnodes.push_back(std::make_shared< Seq >(Seq(child.second)));
 		}
 		else if(child.first == "const")
 		{
-			subnodes.push_back(SharedNode(Const, child.second));
+			subnodes.push_back(std::make_shared< Const >(Const(child.second)));
 		}
 		else if(child.first == "var")
 		{
-			subnodes.push_back(SharedNode(Var, child.second));
+			subnodes.push_back(std::make_shared< Var >(Var(child.second)));
 		}
 		else if(child.first == "br")
 		{

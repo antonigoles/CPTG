@@ -12,10 +12,10 @@ using namespace cptg;
 
 Var::Var() : varType(Type::Number), range({0, 9}) { }
 
-Var::Var(std::shared_ptr< ptree > vartag) : varTag(vartag)
+Var::Var(ptree& varTag)
 {
 	srand((int)time(NULL));
-	auto attributes = varTag->get_child_optional("<xmlattr>");
+	auto attributes = varTag.get_child_optional("<xmlattr>");
 
 	if(attributes != boost::none)
 	{
@@ -113,7 +113,7 @@ void Var::FindLexicalRange(const ptree& attributes)
 		return;
 	}
 
-	const auto rangeKey = varTag->get< std::string >("<xmlattr>.range");
+	const auto rangeKey = attributes.get< std::string >("range");
 	if(lexicalRangesMap.find(rangeKey) != lexicalRangesMap.end())
 	{
 		lexicalRange = lexicalRangesMap.at(rangeKey);
@@ -135,7 +135,7 @@ void Var::FindLength(const ptree& attributes)
 		return;
 	}
 
-	const int readLength = varTag->get< int >("<xmlattr>.length");
+	const int readLength = attributes.get< int >("length");
 	if(readLength >= 0)
 	{
 		length = readLength;

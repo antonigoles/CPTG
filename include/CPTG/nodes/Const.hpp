@@ -17,7 +17,7 @@ class Const : public Node
 
 public:
 	Const();
-	Const(std::shared_ptr< ptree > constTag);
+	Const(ptree& constTag);
 
 	std::string getString() const override;
 };

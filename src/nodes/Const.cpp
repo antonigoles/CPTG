@@ -9,15 +9,15 @@ using namespace cptg;
 
 Const::Const() : value("") { }
 
-Const::Const(std::shared_ptr< ptree > constTag)
+Const::Const(ptree& constTag)
 {
-	auto attributes = constTag->get_child_optional("<xmlattr>");
+	auto attributes = constTag.get_child_optional("<xmlattr>");
 	bool attributeExists =
 		attributes != boost::none && attributes.value().count("value") != 0;
 
 	if(attributeExists)
 	{
-		value = constTag->get< std::string >("<xmlattr>.value");
+		value = constTag.get< std::string >("<xmlattr>.value");
 	}
 	else
 	{

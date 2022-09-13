@@ -15,8 +15,6 @@ namespace cptg
 
 class Var : public Node
 {
-	std::shared_ptr< ptree > varTag;
-
 	enum class Type
 	{
 		Char,
@@ -59,7 +57,7 @@ class Var : public Node
 
 public:
 	Var();
-	Var(std::shared_ptr< ptree > varTag);
+	Var(ptree& varTag);
 
 	std::string getString() const override;
 };

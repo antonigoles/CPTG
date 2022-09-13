@@ -15,7 +15,6 @@ namespace cptg
 
 class Seq : public Node
 {
-	std::shared_ptr< ptree > seqTag;
 	std::vector< std::shared_ptr< Node > > subnodes;
 
 	int times;
@@ -23,14 +22,14 @@ class Seq : public Node
 public:
 	Seq();
 
-	Seq(std::shared_ptr< ptree > seqTag);
+	Seq(ptree& seqTag);
 
-	Seq(std::shared_ptr< ptree > seqTag, int times);
+	Seq(ptree& seqTag, int times);
 
 	std::string getString() const override;
 
 private:
-	void FindSubNodes();
+	void FindSubNodes(ptree& seqTag);
 };
 
 } // namespace cptg
