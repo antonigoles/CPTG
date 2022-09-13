@@ -5,6 +5,8 @@
 #include <boost/optional/optional.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+using namespace cptg;
+
 Const::Const() : value("") { }
 
 Const::Const(std::shared_ptr< ptree > tag)

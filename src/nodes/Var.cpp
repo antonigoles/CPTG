@@ -8,6 +8,8 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+using namespace cptg;
+
 Var::Var() : varType(Type::Number), range({0, 9}) { }
 
 Var::Var(std::shared_ptr< ptree > tag) : varTag(tag)

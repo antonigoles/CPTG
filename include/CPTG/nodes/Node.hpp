@@ -1,18 +1,23 @@
 #pragma once
 #include <iostream>
 
-// Abstract class for all Nodes
-class Node
+namespace cptg
 {
-public:
-	virtual ~Node() = default;
 
-	// Prints the contents of a node to the standard output
-	virtual std::string getString() const = 0;
-
-	friend std::ostream& operator<<(std::ostream& od, const Node& node)
+	// Abstract class for all Nodes
+	class Node
 	{
-		od << node.getString();
-		return od;
-	}
-};
+	public:
+		virtual ~Node() = default;
+
+		// Prints the contents of a node to the standard output
+		virtual std::string getString() const = 0;
+
+		friend std::ostream& operator<<(std::ostream& od, const Node& node)
+		{
+			od << node.getString();
+			return od;
+		}
+	};
+
+}

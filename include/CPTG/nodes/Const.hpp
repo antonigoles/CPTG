@@ -8,13 +8,18 @@
 
 typedef boost::property_tree::ptree ptree;
 
-class Const : public Node
+namespace cptg
 {
-    std::string value;
 
-public:
-    Const();
-    Const( std::shared_ptr< ptree > );
+    class Const : public Node
+    {
+        std::string value;
 
-    std::string getString() const override;
-};
+    public:
+        Const();
+        Const(std::shared_ptr< ptree >);
+
+        std::string getString() const override;
+    };
+
+}

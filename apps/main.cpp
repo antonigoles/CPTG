@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	Seq root = Seq(
+	cptg::Seq root = cptg::Seq(
 		std::make_shared<ptree>(testTag.get()),
 		1);
 	

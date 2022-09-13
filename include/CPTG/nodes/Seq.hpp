@@ -10,6 +10,9 @@
 
 typedef boost::property_tree::ptree ptree;
 
+namespace cptg
+{
+
 class Seq : public Node
 {
 	std::shared_ptr< ptree > seqTag;
@@ -19,13 +22,15 @@ class Seq : public Node
 
 public:
 	Seq();
-	
-	Seq( std::shared_ptr< ptree > );
-	
-	Seq( std::shared_ptr< ptree >, int );
+
+	Seq(std::shared_ptr< ptree >);
+
+	Seq(std::shared_ptr< ptree >, int);
 
 	std::string getString() const override;
-		
+
 private:
 	void FindSubNodes();
 };
+
+}

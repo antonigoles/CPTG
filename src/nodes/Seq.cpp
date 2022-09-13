@@ -9,6 +9,8 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
 
+using namespace cptg;
+
 // Creates a shared pointer to nodeType object
 #define SharedNode(nodeType, propTree) \
 	std::make_shared<nodeType>( \
