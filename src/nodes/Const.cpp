@@ -12,11 +12,12 @@ Const::Const() : value("") { }
 Const::Const(std::shared_ptr< ptree > tag)
 {
 	auto attributes = tag->get_child_optional("<xmlattr>");
-	bool attributeExists = attributes != boost::none && attributes.value().count("value") != 0;
+	bool attributeExists =
+		attributes != boost::none && attributes.value().count("value") != 0;
 
 	if(attributeExists)
 	{
-		value = tag->get<std::string>("<xmlattr>.value");
+		value = tag->get< std::string >("<xmlattr>.value");
 	}
 	else
 	{

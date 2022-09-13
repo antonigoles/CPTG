@@ -8,5 +8,5 @@ Br::Br() { }
 
 std::string Br::getString() const
 {
-    return "\n";
+	return "\n";
 }

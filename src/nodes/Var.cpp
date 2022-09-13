@@ -1,7 +1,7 @@
 #include <iostream>
+#include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
 #include "CPTG/nodes/Var.hpp"
 
@@ -24,7 +24,7 @@ Var::Var(std::shared_ptr< ptree > tag) : varTag(tag)
 	else
 	{
 		varType = Type::Number;
-		range = { 0, 9 };
+		range = {0, 9};
 	}
 }
 
@@ -41,7 +41,7 @@ void Var::FindParameters(const ptree& attributes)
 	{
 		FindLexicalRange(attributes);
 	}
-	
+
 	if(varType == Type::String || varType == Type::Float)
 	{
 		FindLength(attributes);
@@ -59,17 +59,19 @@ void Var::FindType(const ptree& attributes)
 	{
 		// It is permited to not specify type
 		varType = Type::Number;
-		return; 
+		return;
 	}
 
-	const auto type = attributes.get<std::string>("type");
+	const auto type = attributes.get< std::string >("type");
 	if(typeMap.find(type) != typeMap.end())
 	{
 		varType = typeMap.at(type);
 	}
 	else
 	{
-		std::cout << "Error: Unknown variable type provided\nUsing default instead" << std::endl;
+		std::cerr
+			<< "Error: Unknown variable type provided\nUsing default instead"
+			<< std::endl;
 	}
 }
 
@@ -82,20 +84,22 @@ void Var::FindNumericRange(const ptree& attributes)
 		return;
 	}
 
-	auto rangeStr = attributes.get<std::string>("range");
+	auto rangeStr = attributes.get< std::string >("range");
 	std::vector< std::string > splitRange;
 
 	boost::split(splitRange, rangeStr, boost::is_any_of(":"));
 
 	const int rangeStart = std::stoi(splitRange[0]);
 	const int rangeEnd = std::stoi(splitRange[1]);
-	if (rangeStart < rangeEnd)
+	if(rangeStart < rangeEnd)
 	{
-		range = { rangeStart, rangeEnd };
+		range = {rangeStart, rangeEnd};
 	}
 	else
 	{
-		std::cout << "Error: First range element is larger than the second one\nUsing default instead" << std::endl;
+		std::cerr << "Error: First range element is larger than the second "
+					 "one\nUsing default instead"
+				  << std::endl;
 		range = {0, 9};
 	}
 }
@@ -109,14 +113,15 @@ void Var::FindLexicalRange(const ptree& attributes)
 		return;
 	}
 
-	const auto rangeKey = varTag->get<std::string>("<xmlattr>.range");
-	if (lexicalRangesMap.find(rangeKey) != lexicalRangesMap.end())
+	const auto rangeKey = varTag->get< std::string >("<xmlattr>.range");
+	if(lexicalRangesMap.find(rangeKey) != lexicalRangesMap.end())
 	{
 		lexicalRange = lexicalRangesMap.at(rangeKey);
 	}
 	else
 	{
-		std::cout << "Error: Unknown lexical range\nUsed default instead" << std::endl;
+		std::cerr << "Error: Unknown lexical range\nUsed default instead"
+				  << std::endl;
 		lexicalRange = LexicalRange::abc;
 	}
 }
@@ -130,14 +135,16 @@ void Var::FindLength(const ptree& attributes)
 		return;
 	}
 
-	const int readLength = varTag->get<int>("<xmlattr>.length");	
+	const int readLength = varTag->get< int >("<xmlattr>.length");
 	if(readLength >= 0)
 	{
 		length = readLength;
 	}
 	else
 	{
-		std::cout << "Error: Length must be positive\nUsing default length instead" << std::endl;
+		std::cerr
+			<< "Error: Length must be positive\nUsing default length instead"
+			<< std::endl;
 		length = 3;
 	}
 }
@@ -145,7 +152,7 @@ void Var::FindLength(const ptree& attributes)
 std::string Var::getString() const
 {
 	std::string result = "";
-	
+
 	const bool bIsNumeric = (varType == Type::Number || varType == Type::Float);
 	if(bIsNumeric)
 	{
@@ -183,21 +190,21 @@ std::string Var::GenerateDecimalPlaces(int generatedNumber) const
 
 	const int decPlacesNumbers = rand() % power;
 
-	if (decPlacesNumbers == 0)
+	if(decPlacesNumbers == 0)
 	{
 		return "";
 	}
 
 	std::string decPlaces = std::to_string(decPlacesNumbers);
 	std::reverse(decPlaces.begin(), decPlaces.end());
-	
+
 	return "." + decPlaces;
 }
 
 char Var::GenerateRandomChar() const
 {
 	LexicalRange typeToGenerate;
-	if (lexicalRange == LexicalRange::all)
+	if(lexicalRange == LexicalRange::all)
 	{
 		typeToGenerate = chooseRange();
 	}
@@ -206,12 +213,12 @@ char Var::GenerateRandomChar() const
 		typeToGenerate = lexicalRange;
 	}
 
-	
-	if (lexicalRange == LexicalRange::abc)
+
+	if(lexicalRange == LexicalRange::abc)
 	{
 		return abcRange[rand() % abcRange.size()];
 	}
-	else if (lexicalRange == LexicalRange::ABC)
+	else if(lexicalRange == LexicalRange::ABC)
 	{
 		return ABCRange[rand() % ABCRange.size()];
 	}
@@ -223,14 +230,15 @@ char Var::GenerateRandomChar() const
 
 Var::LexicalRange Var::chooseRange() const
 {
-	const int sumOfChars = abcRange.size() + ABCRange.size() + specialRange.size();
+	const int sumOfChars =
+		abcRange.size() + ABCRange.size() + specialRange.size();
 	const int charToUse = rand() % sumOfChars;
 
-	if (charToUse < abcRange.size())
+	if(charToUse < abcRange.size())
 	{
 		return LexicalRange::abc;
 	}
-	else if (charToUse - abcRange.size() < ABCRange.size())
+	else if(charToUse - abcRange.size() < ABCRange.size())
 	{
 		return LexicalRange::ABC;
 	}
@@ -240,20 +248,26 @@ Var::LexicalRange Var::chooseRange() const
 	}
 }
 
-const std::vector<char> Var::abcRange = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-const std::vector<char> Var::ABCRange = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-const std::vector<char> Var::specialRange = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\', ':', ';', '"', '\'', '<', ',', '>', '.', '?', '/', '~', '|' };
+const std::vector< char > Var::abcRange = {
+	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+	'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+const std::vector< char > Var::ABCRange = {
+	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+	'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+const std::vector< char > Var::specialRange = {
+	'!', '@',  '#', '$', '%', '^', '&', '*', '(',  ')', '-',
+	'_', '+',  '=', '{', '}', '[', ']', '|', '\\', ':', ';',
+	'"', '\'', '<', ',', '>', '.', '?', '/', '~',  '|'};
 
-const std::unordered_map<std::string, Var::Type> Var::typeMap = {
+const std::unordered_map< std::string, Var::Type > Var::typeMap = {
 	{"Char", Type::Char},
 	{"Number", Type::Number},
 	{"Float", Type::Float},
-	{"String", Type::String}
-};
+	{"String", Type::String}};
 
-const std::unordered_map < std::string, Var::LexicalRange > Var::lexicalRangesMap = {
-	{"abc", LexicalRange::abc},
-	{"ABC", LexicalRange::ABC},
-	{"special", LexicalRange::special},
-	{"all", LexicalRange::all}
-};
+const std::unordered_map< std::string, Var::LexicalRange >
+	Var::lexicalRangesMap = {
+		{"abc", LexicalRange::abc},
+		{"ABC", LexicalRange::ABC},
+		{"special", LexicalRange::special},
+		{"all", LexicalRange::all}};

@@ -5,12 +5,12 @@
 namespace cptg
 {
 
-    class Br : public Node
-    {
-    public:
-        Br();
+class Br : public Node
+{
+public:
+	Br();
 
-        std::string getString() const override;
-    };
+	std::string getString() const override;
+};
 
-}
+} // namespace cptg

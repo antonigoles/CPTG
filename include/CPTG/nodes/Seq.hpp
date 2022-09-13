@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
 #include <memory>
 #include <unordered_map>
+#include <vector>
 
 #include "CPTG/nodes/Node.hpp"
 
@@ -33,4 +33,4 @@ private:
 	void FindSubNodes();
 };
 
-}
+} // namespace cptg
