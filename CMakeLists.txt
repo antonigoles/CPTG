@@ -16,5 +16,6 @@ find_package(Boost 1.67.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src/nodes)
+add_subdirectory(src/printers)
 
 add_subdirectory(apps)
