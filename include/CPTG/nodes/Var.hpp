@@ -59,7 +59,7 @@ class Var : public Node
 
 public:
 	Var();
-	Var(std::shared_ptr< ptree >);
+	Var(std::shared_ptr< ptree > varTag);
 
 	std::string getString() const override;
 };

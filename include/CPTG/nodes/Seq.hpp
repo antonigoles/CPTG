@@ -23,9 +23,9 @@ class Seq : public Node
 public:
 	Seq();
 
-	Seq(std::shared_ptr< ptree >);
+	Seq(std::shared_ptr< ptree > seqTag);
 
-	Seq(std::shared_ptr< ptree >, int);
+	Seq(std::shared_ptr< ptree > seqTag, int times);
 
 	std::string getString() const override;
 

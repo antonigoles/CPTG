@@ -17,7 +17,7 @@ using namespace cptg;
 
 Seq::Seq() : times(1) { }
 
-Seq::Seq(std::shared_ptr< ptree > sT) : seqTag(sT)
+Seq::Seq(std::shared_ptr< ptree > seqTag) : seqTag(seqTag)
 {
 	auto attributes = seqTag->get_child_optional("<xmlattr>");
 	bool attributeExists =
@@ -35,7 +35,8 @@ Seq::Seq(std::shared_ptr< ptree > sT) : seqTag(sT)
 	FindSubNodes();
 }
 
-Seq::Seq(std::shared_ptr< ptree > sT, int times) : seqTag(sT), times(times)
+Seq::Seq(std::shared_ptr< ptree > seqTag, int times) :
+	seqTag(seqTag), times(times)
 {
 	FindSubNodes();
 }

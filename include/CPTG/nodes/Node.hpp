@@ -12,10 +12,10 @@ public:
 
 	virtual std::string getString() const = 0;
 
-	friend std::ostream& operator<<(std::ostream& od, const Node& node)
+	friend std::ostream& operator<<(std::ostream& os, const Node& node)
 	{
-		od << node.getString();
-		return od;
+		os << node.getString();
+		return os;
 	}
 };
 

@@ -12,7 +12,7 @@ using namespace cptg;
 
 Var::Var() : varType(Type::Number), range({0, 9}) { }
 
-Var::Var(std::shared_ptr< ptree > tag) : varTag(tag)
+Var::Var(std::shared_ptr< ptree > vartag) : varTag(vartag)
 {
 	srand((int)time(NULL));
 	auto attributes = varTag->get_child_optional("<xmlattr>");
