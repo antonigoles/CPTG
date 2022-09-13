@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -32,5 +33,14 @@ int main(int argc, char** argv)
 		std::make_shared<ptree>(testTag.get()),
 		1);
 	
-	std::cout << root;
+	if (argc == 3)
+	{
+		std::ofstream outputFile(argv[2], std::ios::trunc);
+		outputFile << root;
+		outputFile.close();
+	}
+	else
+	{
+		std::cout << root;
+	}
 }
