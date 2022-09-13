@@ -43,26 +43,23 @@ Seq::Seq(std::shared_ptr< ptree > sT, int times) :
 // TODO: Transform Node to act as a factory to clean up this part of code
 void Seq::FindSubNodes()
 {
-	BOOST_FOREACH(ptree::value_type& child, (*seqTag))
-	{        
-		if(child.first == "seq")
+	BOOST_FOREACH(ptree::value_type & child, (*seqTag))
+	{
+		if (child.first == "seq")
 		{
-			subnodes.push_back( SharedNode(Seq, child.second) );
+			subnodes.push_back(SharedNode(Seq, child.second));
 		}
-
-		if(child.first == "const")
+		else if (child.first == "const")
 		{
-			subnodes.push_back( SharedNode(Const, child.second) );
+			subnodes.push_back(SharedNode(Const, child.second));
 		}
-
-		if(child.first == "var")
+		else if (child.first == "var")
 		{
-			subnodes.push_back( SharedNode(Var, child.second) );
+			subnodes.push_back(SharedNode(Var, child.second));
 		}
-
-		if(child.first == "br")
+		else if (child.first == "br")
 		{
-			subnodes.push_back( std::make_shared<Br>() );
+			subnodes.push_back(std::make_shared<Br>());
 		}
 	}
 }
