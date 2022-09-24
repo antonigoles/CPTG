@@ -15,8 +15,9 @@ class PrintManager
 
 public:
 	PrintManager();
-	PrintManager(std::string inputFile);
-	PrintManager(std::string inputFile, std::string outputFile);
+
+	void setInputFile(const std::string& inFile);
+	void setOutputFile(const std::string& outFile);
 
 	void findNodes();
 	void generateNewTest();

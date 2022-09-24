@@ -3,7 +3,7 @@
 
 #include "CPTG/nodes/Seq.hpp"
 #include "CPTG/nodes/Var.hpp"
-#include "CPTG/printers/PrintManager.hpp"
+#include "CPTG/nodes/NodesDecorator.hpp"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -13,11 +13,14 @@ using namespace cptg;
 
 PrintManager::PrintManager() { }
 
-PrintManager::PrintManager(std::string inputFile) : inputFile(inputFile) { }
-
-PrintManager::PrintManager(std::string inputFile, std::string outputFile) :
-	inputFile(inputFile), outputFile(outputFile)
+void PrintManager::setInputFile(const std::string& inFile) 
 {
+	inputFile = inFile;
+}
+
+void PrintManager::setOutputFile(const std::string& outFile)
+{
+	outputFile = outFile;
 }
 
 void PrintManager::findNodes()
