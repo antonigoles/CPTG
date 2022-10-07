@@ -11,12 +11,16 @@ int main(int argc, char** argv)
 	cptg::PrintManager printer;
 	printer.setInputFile(argv[1]);
 
-	if(argc == 3)
+	if(argc >= 3)
 	{
 		printer.setOutputFile(argv[2]);
 	}
+
+	if(argc == 4)
+	{
+		printer.setNumberOfTest(std::atoi(argv[3]));
+	}
 	
 	printer.findNodes();
-	printer.printToConsole();
-	printer.printToFile();
+	printer.print();
 }

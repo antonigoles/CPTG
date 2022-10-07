@@ -23,6 +23,15 @@ void PrintManager::setOutputFile(const std::string& outFile)
 	outputFile = outFile;
 }
 
+void PrintManager::setNumberOfTest(const unsigned int testNumber)
+{
+	numberOfTests = testNumber;
+	while(numberOfDigits*10 <= testNumber)
+	{
+		numberOfDigits *= 10;
+	}
+}
+
 void PrintManager::findNodes()
 {
 	if(inputFile == "")
@@ -44,37 +53,61 @@ void PrintManager::findNodes()
 	root = cptg::Seq(testTag.get(), 1);
 }
 
-void PrintManager::generateNewTest()
+void PrintManager::print() 
+{
+	auto printerFunction = (outputFile == "")
+							   ? &PrintManager::printTestToConsole
+							   : &PrintManager::printTestToFile;
+	
+	for(unsigned int i = 1; i <= numberOfTests; i++)
+	{
+		getTestToBuffer();
+		(this->*printerFunction)(i);
+	}
+}
+
+void PrintManager::getTestToBuffer()
 {
 	testBuff.clear();
 	testBuff = root.getString();
 }
 
-void PrintManager::printToFile()
+void PrintManager::printTestToFile(const unsigned int testNumber)
 {
-	if(outputFile == "")
-	{
-		std::cerr << "You must prvide an output file name to print to cmd";
-		return; // Return because this is non-criticall error
-	}
+	std::string newTestName = outputFile + getFormatedTestNumber(testNumber) + ".in";
+	printToFile(newTestName);
+}
 
-	if(testBuff == "")
-	{
-		testBuff = root.getString();
-	}
+std::string PrintManager::getFormatedTestNumber(const unsigned int testNumber)
+{
+	std::string result = "";
 
-	std::ofstream file(outputFile, std::ios::trunc);
+	// Guarantee that all test numbers will have an equal number of digits
+	for(unsigned int i = numberOfDigits; i > testNumber; i /= 10)
+	{
+		result += "0";
+	}
+	
+	result += std::to_string(testNumber);
+	return result;
+}
+
+void PrintManager::printTestToConsole(const unsigned int testNumber) 
+{
+	std::cout << "\nTest number " << testNumber << ":\n\n";
+	printToConsole();
+}
+
+void PrintManager::printToFile(const std::string& fileName)
+{
+	std::ofstream file(fileName, std::ios::trunc);
 	file << testBuff;
 	file.close();
 
-	std::cout << "Output written to " << outputFile;
+	std::cout << "Output written to: " << fileName << "\n";
 }
 
 void PrintManager::printToConsole()
 {
-	if(testBuff == "")
-	{
-		testBuff = root.getString();
-	}
 	std::cout << testBuff;
 }
