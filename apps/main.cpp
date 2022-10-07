@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	{
 		printer.setNumberOfTest(std::atoi(argv[3]));
 	}
-	
+
 	printer.findNodes();
 	printer.print();
 }

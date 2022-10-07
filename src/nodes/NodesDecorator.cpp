@@ -1,9 +1,9 @@
 #include <fstream>
 #include <iostream>
 
+#include "CPTG/nodes/NodesDecorator.hpp"
 #include "CPTG/nodes/Seq.hpp"
 #include "CPTG/nodes/Var.hpp"
-#include "CPTG/nodes/NodesDecorator.hpp"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -13,7 +13,7 @@ using namespace cptg;
 
 PrintManager::PrintManager() { }
 
-void PrintManager::setInputFile(const std::string& inFile) 
+void PrintManager::setInputFile(const std::string& inFile)
 {
 	inputFile = inFile;
 }
@@ -26,7 +26,7 @@ void PrintManager::setOutputFile(const std::string& outFile)
 void PrintManager::setNumberOfTest(const unsigned int testNumber)
 {
 	numberOfTests = testNumber;
-	while(numberOfDigits*10 <= testNumber)
+	while(numberOfDigits * 10 <= testNumber)
 	{
 		numberOfDigits *= 10;
 	}
@@ -53,12 +53,12 @@ void PrintManager::findNodes()
 	root = cptg::Seq(testTag.get(), 1);
 }
 
-void PrintManager::print() 
+void PrintManager::print()
 {
 	auto printerFunction = (outputFile == "")
 							   ? &PrintManager::printTestToConsole
 							   : &PrintManager::printTestToFile;
-	
+
 	for(unsigned int i = 1; i <= numberOfTests; i++)
 	{
 		getTestToBuffer();
@@ -74,7 +74,8 @@ void PrintManager::getTestToBuffer()
 
 void PrintManager::printTestToFile(const unsigned int testNumber)
 {
-	std::string newTestName = outputFile + getFormatedTestNumber(testNumber) + ".in";
+	std::string newTestName =
+		outputFile + getFormatedTestNumber(testNumber) + ".in";
 	printToFile(newTestName);
 }
 
@@ -87,12 +88,12 @@ std::string PrintManager::getFormatedTestNumber(const unsigned int testNumber)
 	{
 		result += "0";
 	}
-	
+
 	result += std::to_string(testNumber);
 	return result;
 }
 
-void PrintManager::printTestToConsole(const unsigned int testNumber) 
+void PrintManager::printTestToConsole(const unsigned int testNumber)
 {
 	std::cout << "\nTest number " << testNumber << ":\n\n";
 	printToConsole();

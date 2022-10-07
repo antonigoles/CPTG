@@ -5,6 +5,7 @@ build/*
 .vscode/
 .vs/
 out/
+CMakeSettings.json
 
 # Do not include binaries folder
 bin/*
