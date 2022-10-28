@@ -1,8 +1,12 @@
+#include <iostream>
+
 #include "CPTG/nodes/Br.hpp"
+
+using namespace cptg;
 
 Br::Br() { }
 
-void Br::Print()
+std::string Br::getString() const
 {
-    std::cout << '\n';
+	return "\n";
 }

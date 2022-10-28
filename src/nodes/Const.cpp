@@ -1,24 +1,31 @@
+#include <iostream>
+
 #include "CPTG/nodes/Const.hpp"
+
+#include <boost/optional/optional.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
+using namespace cptg;
 
 Const::Const() : value("") { }
 
-Const::Const(std::shared_ptr< boost::property_tree::ptree > tag) : 
-    value("")
+Const::Const(ptree& constTag)
 {
-    // Pointer created to attributes node only if they exist
-    boost::optional< boost::property_tree::ptree& > child =
-        tag->get_child_optional("<xmlattr>");
+	auto attributes = constTag.get_child_optional("<xmlattr>");
+	bool attributeExists =
+		attributes != boost::none && attributes.value().count("value") != 0;
 
-    if(child)
-    {
-        if(child.value().count("value"))
-        {
-            value = tag->get<std::string>("<xmlattr>.value");
-        }
-    }
+	if(attributeExists)
+	{
+		value = constTag.get< std::string >("<xmlattr>.value");
+	}
+	else
+	{
+		value = "";
+	}
 }
 
-void Const::Print()
+std::string Const::getString() const
 {
-    std::cout << value << ' ';
+	return value + ' ';
 }

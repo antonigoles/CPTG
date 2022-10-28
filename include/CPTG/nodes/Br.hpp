@@ -1,13 +1,16 @@
 #pragma once
 
-#include <iostream>
+#include "CPTG/nodes/Node.hpp"
 
-#include "Node.hpp"
+namespace cptg
+{
 
 class Br : public Node
 {
 public:
-    Br();
+	Br();
 
-    void Print() override;
+	std::string getString() const override;
 };
+
+} // namespace cptg

@@ -1,33 +1,35 @@
 #pragma once
 
-#include <vector>
 #include <memory>
-#include <iostream>
+#include <unordered_map>
+#include <vector>
 
-#include "Node.hpp"
-#include "Const.hpp"
-#include "Br.hpp"
-#include "Var.hpp"
+#include "CPTG/nodes/Node.hpp"
 
-#include <boost/optional/optional.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/foreach.hpp>
+
+typedef boost::property_tree::ptree ptree;
+
+namespace cptg
+{
 
 class Seq : public Node
 {
-    std::shared_ptr< boost::property_tree::ptree > seqTag;
-    std::vector< std::shared_ptr< Node > > subnodes;
+	std::vector< std::shared_ptr< Node > > subnodes;
 
-    int times;
+	int times;
 
 public:
-    Seq();
-    // Finds the times attribute from ptree
-    Seq( std::shared_ptr< boost::property_tree::ptree > );
-    // The times variable is provided by on construction
-    Seq( std::shared_ptr< boost::property_tree::ptree >, int );
+	Seq();
 
-    void FindSubNodes();
-    void Print() override;
+	Seq(ptree& seqTag);
+
+	Seq(ptree& seqTag, int times);
+
+	std::string getString() const override;
+
+private:
+	void FindSubNodes(ptree& seqTag);
 };
+
+} // namespace cptg

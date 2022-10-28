@@ -1,0 +1,25 @@
+---
+BasedOnStyle: Microsoft
+AccessModifierOffset: '-4'
+AlignAfterOpenBracket: AlwaysBreak
+AllowShortFunctionsOnASingleLine: Empty
+AlwaysBreakTemplateDeclarations: 'Yes'
+ColumnLimit: '80'
+CompactNamespaces: 'false'
+MaxEmptyLinesToKeep: '2'
+NamespaceIndentation: None
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: 'false'
+SpaceBeforeParens: Never
+SpaceInEmptyParentheses: 'false'
+SpacesInAngles: 'true'
+SpaceInEmptyBlock: 'true'
+SortIncludes: CaseSensitive
+SortUsingDeclarations: 'false'
+TabWidth: '4'
+UseTab: ForContinuationAndIndentation
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: 1
+BreakConstructorInitializers: AfterColon
+BreakInheritanceList: AfterComma

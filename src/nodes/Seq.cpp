@@ -1,68 +1,74 @@
-#include "CPTG/nodes/Seq.hpp"
+#include <iostream>
 
-// Creates a shared pointer to nodeType object
-#define SharedNode(nodeType, propTree) \
-    std::make_shared<nodeType>( \
-        nodeType(std::make_shared<boost::property_tree::ptree>(propTree)))
+#include "CPTG/nodes/Br.hpp"
+#include "CPTG/nodes/Const.hpp"
+#include "CPTG/nodes/Seq.hpp"
+#include "CPTG/nodes/Var.hpp"
+
+#include <boost/foreach.hpp>
+#include <boost/optional/optional.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
+using namespace cptg;
 
 Seq::Seq() : times(1) { }
 
-Seq::Seq(std::shared_ptr< boost::property_tree::ptree > sT) : 
-    seqTag(sT),
-    times(1)
+Seq::Seq(ptree& seqTag)
 {
-    // Pointer created to attributes node only if they exist
-    boost::optional< boost::property_tree::ptree& > child =
-        seqTag->get_child_optional("<xmlattr>");
+	auto attributes = seqTag.get_child_optional("<xmlattr>");
+	bool attributeExists =
+		attributes != boost::none && attributes.value().count("times") != 0;
 
-    if(child)
-    {
-        if(child.value().count("times"))
-        {
-            times = seqTag->get<int>("<xmlattr>.times");
-        }
-    }
+	if(attributeExists)
+	{
+		times = seqTag.get< int >("<xmlattr>.times");
+	}
+	else
+	{
+		times = 1;
+	}
 
-    FindSubNodes();
+	FindSubNodes(seqTag);
 }
 
-Seq::Seq(std::shared_ptr< boost::property_tree::ptree > sT, int times) : 
-    seqTag(sT),
-    times(times) { }
-
-void Seq::FindSubNodes()
+Seq::Seq(ptree& seqTag, int times) : times(times)
 {
-    BOOST_FOREACH(boost::property_tree::ptree::value_type& child, (*seqTag))
-    {        
-        if(child.first == "seq")
-        {
-            subnodes.push_back( SharedNode(Seq, child.second) );
-        }
-
-        if(child.first == "const")
-        {
-            subnodes.push_back( SharedNode(Const, child.second) );
-        }
-
-        if(child.first == "var")
-        {
-            subnodes.push_back( SharedNode(Var, child.second) );
-        }
-
-        if(child.first == "br")
-        {
-            subnodes.push_back( std::make_shared<Br>() );
-        }
-    }
+	FindSubNodes(seqTag);
 }
 
-void Seq::Print()
+void Seq::FindSubNodes(ptree& seqTag)
 {
-    for(int i = 0; i < times; i++)
-    {
-        for(auto& node : subnodes)
-        {
-            node->Print();
-        }
-    }
+	BOOST_FOREACH(ptree::value_type& child, seqTag)
+	{
+		if(child.first == "seq")
+		{
+			subnodes.push_back(std::make_shared< Seq >(Seq(child.second)));
+		}
+		else if(child.first == "const")
+		{
+			subnodes.push_back(std::make_shared< Const >(Const(child.second)));
+		}
+		else if(child.first == "var")
+		{
+			subnodes.push_back(std::make_shared< Var >(Var(child.second)));
+		}
+		else if(child.first == "br")
+		{
+			subnodes.push_back(std::make_shared< Br >());
+		}
+	}
+}
+
+std::string Seq::getString() const
+{
+	std::string result = "";
+	for(int i = 0; i < times; i++)
+	{
+		for(auto& node : subnodes)
+		{
+			result += node->getString();
+		}
+	}
+
+	return result;
 }

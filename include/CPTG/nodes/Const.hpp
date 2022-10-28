@@ -1,21 +1,25 @@
 #pragma once
 
-#include <iostream>
 #include <memory>
 
-#include "Node.hpp"
+#include "CPTG/nodes/Node.hpp"
 
-#include <boost/optional/optional.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+
+typedef boost::property_tree::ptree ptree;
+
+namespace cptg
+{
 
 class Const : public Node
 {
-    std::string value;
+	std::string value;
 
 public:
-    Const();
-    Const( std::shared_ptr< boost::property_tree::ptree > );
+	Const();
+	Const(ptree& constTag);
 
-    void Print() override;
+	std::string getString() const override;
 };
+
+} // namespace cptg
